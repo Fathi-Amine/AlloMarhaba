@@ -8,6 +8,7 @@ const PORT = process.env.PORT
 const authRoutes = require('./Routes/AuthRoutes')
 const userRoutes = require('./Routes/UserRoutes')
 const mailRoutes = require('./Routes/MailRoutes')
+const managerRoutes = require('./Routes/ManagerRoutes')
 const {urlencoded} = require("express");
 const cookieParser = require('cookie-parser')
 const connectToDatabase = require('./Database/connect')
@@ -32,6 +33,8 @@ app.use(cors());
 app.use('/api/', authRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/mail', mailRoutes)
+app.use('/api/manager', managerRoutes)
+
 
 app.use(errorHandlerMiddleware);
 
