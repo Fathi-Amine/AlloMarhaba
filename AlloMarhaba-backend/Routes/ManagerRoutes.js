@@ -2,7 +2,12 @@ const RestaurantController = require("../Controllers/manager/RestaurantControlle
 const authMiddleware = require("../Middlewares/authMiddleware");
 const router = require("express").Router();
 
-router.post("/add", RestaurantController.createRestaurant);
-// router.post("/add", authMiddleware, RestaurantController.createRestaurant);
+// router.post("/add", RestaurantController.createRestaurant);
+router.get(
+    "/checkRestaurant",
+    authMiddleware,
+    RestaurantController.getRestaurantByUserId
+);
+router.post("/add", authMiddleware, RestaurantController.createRestaurant);
 
 module.exports = router;

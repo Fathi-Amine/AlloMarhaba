@@ -28,11 +28,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(helmet());
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use("/api/", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/mail", mailRoutes);
-app.use("/manager/restaurants", managaerRoutes);
+app.use("/api/manager", managaerRoutes);
 
 app.use(errorHandlerMiddleware);
 
