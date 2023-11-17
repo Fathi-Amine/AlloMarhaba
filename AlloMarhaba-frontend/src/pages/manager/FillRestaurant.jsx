@@ -4,10 +4,14 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import LeafletClick from "../../components/LeafletClick.jsx";
 import logo from "../../assets/logolocation.png";
 
+import { useSelector } from "react-redux";
+
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 function FillRestaurant() {
+    const { lat, lng } = useSelector((state) => state.map);
+
     const [countries, setCountries] = useState("");
     const [chosenCountry, setChosenCountry] = useState("");
 
@@ -214,7 +218,13 @@ function FillRestaurant() {
                         </MapContainer>
                     )}
                 </div>
-                <button className="bg-slate-500 text-white px-4 py-2 rounded-md hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50">
+                <button
+                    onClick={() => {
+                        console.log("lat", lat);
+                        console.log(lat, lng);
+                    }}
+                    className="bg-slate-500 text-white px-4 py-2 rounded-md hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50"
+                >
                     checkckc
                 </button>
             </div>

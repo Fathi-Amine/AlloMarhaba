@@ -6,10 +6,13 @@ import { useMap } from "react-leaflet";
 
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+import { useDispatch } from "react-redux";
+import { setCoordinates } from "../slices/mapSlice";
 
 const LeafletClick = () => {
     const map = useMap();
     const [latlng, setLatlng] = useState({});
+    const dispatch = useDispatch();
 
     useEffect(() => {
         let marker;
@@ -24,9 +27,18 @@ const LeafletClick = () => {
                 .addTo(map)
                 .bindPopup(e.latlng.toString())
                 .openPopup();
+
+            // console.log(e.latlng);
+            dispatch(
+                setCoordinates({
+                    lat: e.latlng.lat,
+                    lng: e.latlng.lng,
+                })
+            );
         });
-    }, [map]);
-    console.log(latlng);
+    }, [map, dispatch, latlng]); // Include latlng in dependency array
+
+    // console.log(latlng);
     return null;
 };
 
