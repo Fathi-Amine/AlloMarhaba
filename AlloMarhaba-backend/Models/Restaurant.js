@@ -23,17 +23,9 @@ const RestaurantSchema = new mongoose.Schema({
         minLength: 3,
         maxLength: 50,
     },
-    state: {
-        type: String,
-        required: [true, "Please Provide a state"],
-        minLength: 3,
-        maxLength: 50,
-    },
     country: {
         type: String,
         required: [true, "Please Provide a country"],
-        minLength: 3,
-        maxLength: 50,
     },
     phone: {
         type: String,

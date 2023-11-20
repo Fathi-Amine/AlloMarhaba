@@ -22,6 +22,7 @@ function FillRestaurant() {
     const [chosenName, setChosenName] = useState("");
     const [chosenPhone, setChosenPhone] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
+    const [error, setError] = useState([]);
 
     // const position = [31.7917, -7.0926];
     const [position, setPosition] = useState([]);
@@ -79,40 +80,61 @@ function FillRestaurant() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setError([]);
 
-        if (
-            chosenName === "" ||
-            chosenPhone === "" ||
-            chosenCountry === "" ||
-            chosenCity === "" ||
-            chosenAdress === "" ||
-            chosenCuisine === "" ||
-            imagePreview === null ||
-            lat === undefined ||
-            lng === undefined
-        ) {
-            console.log("Missing something");
+        const missingFields = [];
+        if (chosenName === "") missingFields.push("Name");
+        if (chosenPhone === "") missingFields.push("Phone");
+        if (chosenCountry === "") missingFields.push("Country");
+        if (chosenCity === "") missingFields.push("City");
+        if (chosenAdress === "") missingFields.push("Adress");
+        if (chosenCuisine === "") missingFields.push("Cuisine");
+        if (chosenImage === "") missingFields.push("Image");
+        if (lat === null || lng === null) missingFields.push("cordinnates");
+        // Add other fields as needed
+
+        if (missingFields.length > 0) {
+            // Show the alert
+            setError(missingFields); // You need to manage the state for missing fields
             return;
         }
 
         const restaurant = {
             name: chosenName,
-            phone: chosenPhone,
-            country: chosenCountry,
-            city: chosenCity,
             adress: chosenAdress,
-            cuisine: chosenCuisine,
+            city: chosenCity,
+            country: chosenCountry,
+            phone: chosenPhone,
             image: imagePreview,
-            lat: lat,
-            lng: lng,
+            cuisineType: chosenCuisine,
+            latitude: lat,
+            longitude: lng,
         };
         console.log(restaurant);
+
+        Axios.post("/api/manager/restaurant/add", restaurant, {
+            withCredentials: true,
+        })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
     return (
         <div className="flex flex-col items-center mt-16">
             <h5 className="text-stone-700 text-2xl font-semibold text-center">
                 Fill Info About Your Resraurant
             </h5>
+            {/* div to display errors */}
+            <div className="flex flex-col items-center bg-red-500 w-full">
+                <ul>
+                    {error.map((err, index) => (
+                        <li key={index}>{err} is required</li>
+                    ))}
+                </ul>
+            </div>
             <div>
                 <form
                     onSubmit={handleSubmit}
@@ -130,7 +152,7 @@ function FillRestaurant() {
                         </div>
                         <div>
                             <input
-                                type="text"
+                                type="number"
                                 className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
                                 placeholder="phone number"
                                 onChange={(e) => setChosenPhone(e.target.value)}

@@ -5,15 +5,17 @@ async function createRestaurant(req, res) {
     const { error } = validateRestaurant.validateCreateRestaurant(req.body);
     if (error) return res.status(400).send({ error: error.details[0].message });
 
-    console.log(req.user);
+    // console.log(req.body);
+
+    // return res.status(200).json({ data: req.body });
 
     try {
+        console.log("inside try");
         const savedRestaurant = await Restaurant.create({
-            user: "65377f3aaa95d6ff01c0613f",
+            user: req.user.userId,
             name: req.body.name,
             adress: req.body.adress,
             city: req.body.city,
-            state: req.body.state,
             country: req.body.country,
             phone: req.body.phone,
             image: req.body.image,
@@ -21,12 +23,13 @@ async function createRestaurant(req, res) {
             latitude: req.body.latitude,
             longitude: req.body.longitude,
         });
+        return res.status(201).json({
+            success: "Restaurant created successfully",
+        });
     } catch (err) {
+        console.log(err);
         return res.status(400).send({ error: err });
     }
-    return res.status(201).json({
-        success: "Restaurant created successfully",
-    });
 }
 
 async function getRestaurantByUserId(req, res) {

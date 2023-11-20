@@ -8,6 +8,10 @@ router.get(
     authMiddleware,
     RestaurantController.getRestaurantByUserId
 );
-router.post("/add", authMiddleware, RestaurantController.createRestaurant);
+router.post(
+    "/restaurant/add",
+    authMiddleware,
+    RestaurantController.createRestaurant
+);
 
 module.exports = router;
