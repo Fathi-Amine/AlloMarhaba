@@ -1,18 +1,12 @@
 const Menu = require('../../Models/Menu');
 
 const createMenuItem = async (req, res) => {
-    const { name, price, restaurant } = req.body;
-    const image = req.file;
-    console.log(image);
+    const { name, image , price, restaurant } = req.body;
+    console.log(req.body);
 
     try {
-        let imageString = null;
 
-        if (image) {
-            // Convert base64 image to string
-            const base64Data = req.file.buffer.toString('base64');
-            imageString = `data:${req.file.mimetype};base64,${base64Data}`;        }
-        const newItem = await Menu.create({ name, image :imageString , price, restaurant});
+        const newItem = await Menu.create({ name, image , price, restaurant});
         return res.status(201).json({ message: 'Item added successfully', newItem });
     } catch (error) {
         return res.status(500).json({ message: error.message });

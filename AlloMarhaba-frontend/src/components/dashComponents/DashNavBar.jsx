@@ -7,7 +7,7 @@ export default function DashboardNavBar() {
 <div>
 
 
-<nav class="fixed top-0 z-50 w-full  border-b border-gray-200 bg-[3b757f]">
+<nav class="fixed top-0 z-50 w-full  border-b border-gray-200 bg-[#3b757f]">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start rtl:justify-end">
