@@ -1,6 +1,12 @@
-const RestaurantController = require("../Controllers/RestaurantController");
+const express = require('express')
+const uploadfile = require('../Utils/multer');
+const router = express.Router();
+const{ createMenuItem} = require('../Controllers/MenuController');
+const RestaurantController = require("../Controllers/manager/RestaurantController");
 const authMiddleware = require("../Middlewares/authMiddleware");
-const router = require("express").Router();
+    
+
+router.post('/addMenu',uploadfile,createMenuItem)
 
 // router.post("/add", RestaurantController.createRestaurant);
 router.get(
@@ -12,3 +18,4 @@ router.post("/add", authMiddleware, RestaurantController.createRestaurant);
 
 
 module.exports = router;
+
