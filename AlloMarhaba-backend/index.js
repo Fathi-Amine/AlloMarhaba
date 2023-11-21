@@ -9,6 +9,7 @@ const authRoutes = require("./Routes/AuthRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 const mailRoutes = require("./Routes/MailRoutes");
 const managaerRoutes = require("./Routes/ManagerRoutes");
+const restaurantRoutes = require("./Routes/RestaurantRoutes");
 const { urlencoded } = require("express");
 const cookieParser = require("cookie-parser");
 const connectToDatabase = require("./Database/connect");
@@ -33,6 +34,7 @@ app.use("/api/", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/mail", mailRoutes);
 app.use("/api/manager", managaerRoutes);
+app.use("/api", restaurantRoutes);
 
 app.use(errorHandlerMiddleware);
 
@@ -41,7 +43,7 @@ const start = async () => {
         await connectToDatabase(process.env.MONGODB_URI);
 
         app.listen(PORT, () => {
-            console.log("Listening to ....");
+            console.log(`Listening to ${PORT}`);
         });
     } catch (e) {
         console.log(e);

@@ -22,6 +22,7 @@ import VerificationPage from "./pages/VerificationPage.jsx";
 import UserListPage from "./pages/AllUsersPage.jsx";
 import FillRestaurant from "./pages/manager/FillRestaurant.jsx";
 import "./index.css";
+import Restaurant from "./components/Restaurants/index.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -37,6 +38,10 @@ const router = createBrowserRouter(
             <Route
                 path="/user/reset-password/:token/:email"
                 element={<ResetPasswordPage />}
+            ></Route>
+            <Route
+                path="/restaurants"
+                element={<Restaurant />}
             ></Route>
             <Route path="" element={<PrivateRoute />}>
                 <Route path="/users" element={<UserListPage />}></Route>

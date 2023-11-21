@@ -1,4 +1,4 @@
-const RestaurantController = require("../Controllers/manager/RestaurantController");
+const RestaurantController = require("../Controllers/RestaurantController");
 const authMiddleware = require("../Middlewares/authMiddleware");
 const router = require("express").Router();
 
@@ -9,5 +9,6 @@ router.get(
     RestaurantController.getRestaurantByUserId
 );
 router.post("/add", authMiddleware, RestaurantController.createRestaurant);
+
 
 module.exports = router;
