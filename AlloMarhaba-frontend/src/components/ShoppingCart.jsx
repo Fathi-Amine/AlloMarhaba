@@ -47,6 +47,7 @@ function ShoppingCart({ hideCart }) {
 
     const reduceQuantity = (item) => {
         if (item.quantity === 1) {
+            console.log("removed to cart because quantity is 1");
             dispatch(removeFromCart(item._id));
             return;
         }
