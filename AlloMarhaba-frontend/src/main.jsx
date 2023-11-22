@@ -21,6 +21,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 import VerificationPage from "./pages/VerificationPage.jsx";
 import UserListPage from "./pages/AllUsersPage.jsx";
 import FillRestaurant from "./pages/manager/FillRestaurant.jsx";
+import Products from "./pages/client/Products.jsx";
 import "./index.css";
 import Restaurant from "./components/Restaurants/Search.jsx";
 
@@ -49,6 +50,10 @@ const router = createBrowserRouter(
                 <Route
                     path="/manager/fill-restaurant"
                     element={<FillRestaurant />}
+                ></Route>
+                <Route
+                    path="/:restaurantName/products"
+                    element={<Products />}
                 ></Route>
             </Route>
         </Route>
