@@ -1,11 +1,16 @@
+/* eslint-disable react/prop-types */
 import "../assets/line__.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart, removeFromCart } from "../slices/cartSlice";
 
-function Card() {
+function Card({ product }) {
     const [isButtonHovered, setIsButtonHovered] = useState(false);
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const dispatch = useDispatch();
+
     const handleButtonClick = () => {
         setIsButtonClicked(!isButtonClicked);
     };
@@ -15,7 +20,8 @@ function Card() {
                 <div className="father-div w-64 h-96 border-2 transition border-transparent hover:border-red-600">
                     <div className="flex justify-center h-64 relative overflow-hidden">
                         <img
-                            src="https://yummi-theme.myshopify.com/cdn/shop/products/shop-6.jpg?v=1589800162&width=360"
+                            src={product.image}
+                            // src="https://yummi-theme.myshopify.com/cdn/shop/products/shop-6.jpg?v=1589800162&width=360"
                             className="h-full"
                             alt=""
                         />
@@ -45,11 +51,29 @@ function Card() {
                                 }}
                             >
                                 {isButtonClicked ? (
-                                    <LocalMallIcon sx={{ color: "white" }} />
+                                    <div
+                                        onClick={() => {
+                                            console.log("removed to cart");
+                                            dispatch(
+                                                removeFromCart(product._id)
+                                            );
+                                        }}
+                                    >
+                                        <LocalMallIcon
+                                            sx={{ color: "white" }}
+                                        />
+                                    </div>
                                 ) : (
-                                    <AddShoppingCartIcon
-                                        sx={{ color: "white" }}
-                                    />
+                                    <div
+                                        onClick={() => {
+                                            console.log("added to cart");
+                                            dispatch(addToCart(product));
+                                        }}
+                                    >
+                                        <AddShoppingCartIcon
+                                            sx={{ color: "white" }}
+                                        />
+                                    </div>
                                 )}
                             </button>
                         </div>
@@ -57,15 +81,17 @@ function Card() {
                     <div className="p-2">
                         <div className="h-full w-full relative">
                             {/* line with a square in the middle */}
-                            <div className="mb-5 relative">
+                            <div className="mb-3 relative">
                                 <div className="line__"></div>
                                 <div className="square__"></div>
                             </div>
 
                             <div className="text-center tracking-wide">
-                                Salisbury Steak
+                                {product.name}
                             </div>
-                            <div className="text-center mt-3">$555</div>
+                            <div className="text-center mt-3">
+                                ${product.price}
+                            </div>
                         </div>
                     </div>
                 </div>

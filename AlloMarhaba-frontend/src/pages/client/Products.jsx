@@ -5,6 +5,8 @@ import Card from "../../components/Card";
 function Products() {
     const [products, setProducts] = useState([]);
     const { restaurantName } = useParams();
+
+    // get cartItems from localStorage
     useEffect(() => {
         document.title = `Products - ${restaurantName} - AlloMarhaba`;
         // get products from products.json
@@ -13,11 +15,12 @@ function Products() {
             .then((data) => setProducts(data))
             .catch((error) => console.error(error));
     }, []);
+
     return (
         <div>
             <div className="w-full flex flex-wrap gap-2 justify-center">
                 {products.map((product) => (
-                    <Card key={product._id} />
+                    <Card product={product} key={product._id} />
                 ))}
             </div>
         </div>

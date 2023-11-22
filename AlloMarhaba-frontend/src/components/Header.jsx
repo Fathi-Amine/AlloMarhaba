@@ -10,8 +10,9 @@ import EmailIcon from "@mui/icons-material/Email";
 import Logo from "../assets/logolocation.png";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ShoppingCart from "./ShoppingCart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../assets/line__.css";
+import { addToCart } from "../slices/cartSlice";
 
 const Header = () => {
     const { userInfo } = useSelector((state) => state.auth);
