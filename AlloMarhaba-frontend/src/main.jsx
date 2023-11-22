@@ -22,7 +22,7 @@ import VerificationPage from "./pages/VerificationPage.jsx";
 import UserListPage from "./pages/AllUsersPage.jsx";
 import FillRestaurant from "./pages/manager/FillRestaurant.jsx";
 import "./index.css";
-import Restaurant from "./components/Restaurants/index.jsx";
+import Restaurant from "./components/Restaurants/Search.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
