@@ -15,7 +15,19 @@ const createMenuItem = async (req, res) => {
 
 const getMenuItems = async (req, res) => {
     try {
-        const menuItems = await Menu.find();
+
+        const menuItems = await Menu.find({});
+        return res.status(200).json({ menu: menuItems });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: error.message });
+    }
+};
+const getMenuItem = async (req, res) => {
+    try {
+      const {id} = req.body
+        
+        const menuItems = await Menu.findOne({_id : id});
         return res.status(200).json({ menu: menuItems });
     } catch (error) {
         console.error(error);
@@ -84,4 +96,4 @@ const deleteMenuItem = async (req, res) => {
 
 
 
-module.exports = { getMenuItems, createMenuItem , updateMenuItem , updateMenuImage, deleteMenuItem};
+module.exports = { getMenuItems,getMenuItem, createMenuItem , updateMenuItem , updateMenuImage, deleteMenuItem};

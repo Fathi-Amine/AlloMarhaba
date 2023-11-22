@@ -11,6 +11,19 @@ export const menusApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
+        showMenus: builder.query({
+             query:()=>({
+                url: `${USERS_URL}/showMenus`,
+                method: 'GET',
+            })
+        }),
+        showMenu: builder.mutation({
+            query:(data)=>({
+               url: `${USERS_URL}/showMenu`,
+               method: 'POST',
+                body: data
+           })
+       }),
      
         
     })
@@ -20,4 +33,4 @@ export const menusApiSlice = apiSlice.injectEndpoints({
 
 
 
-export const {useAddMenuMutation } = menusApiSlice
+export const {useAddMenuMutation , useShowMenusQuery , useShowMenuMutation } = menusApiSlice
