@@ -1,7 +1,5 @@
-const validateRestaurant = require("../validator/restaurantValidator");
-const Restaurant = require("../Models/Restaurant");
-const CuisineType = require("../Models/CuisineType");
-
+const validateRestaurant = require("../../validator/restaurantValidator");
+const Restaurant = require("../../Models/Restaurant");
 
 async function createRestaurant(req, res) {
     const { error } = validateRestaurant.validateCreateRestaurant(req.body);
@@ -63,56 +61,7 @@ async function getRestaurantByUserId(req, res) {
     }
 }
 
-const searchRestaurantByName = async (req, res) => {
-    try {
-
-        const restaurants = await Restaurant.find({
-            $or: [
-                { name: { $regex: req.params.key, $options: 'i' } },
-            ],
-        });
-
-        if (restaurants.length === 0) {
-            return res.status(404).json({ message: 'No restaurants found.' });
-        }
-
-        res.status(200).json({ restaurants });
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching restaurants.', error: error.message });
-    }
-};
-
-const searchByCuisineType = async (req, res) => {
-    try {
-        const cuisineTypeId = req.params.cuisineTypeId;
-        // console.log(cuisineTypeId) ;
-        const restaurants = await Restaurant.find({ cuisineType: cuisineTypeId });
-        console.log(restaurants);
-
-        if (restaurants.length === 0) {
-            return res.status(404).json({ message: 'No restaurants found for this category.' });
-        }
-        
-        res.status(200).json({ restaurants });
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: 'Error fetching restaurants by category.', error: error.message });
-    }
-};
-
-const displayRestarants = async (req, res) => {
-    try {
-        const restaurants = await Restaurant.find();
-        res.json({ restaurants });
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching restaurants.', error: error.message });
-    }
-};
-
 module.exports = {
     createRestaurant,
     getRestaurantByUserId,
-    searchRestaurantByName,
-    searchByCuisineType,
-    displayRestarants
 };
