@@ -36,12 +36,11 @@ const getMenuItem = async (req, res) => {
 };
 
 const updateMenuItem = async (req, res) => {
-    const { id } = req.params;
-    const { name, price, restaurant } = req.body;
-    console.log('c"est le nom  ',req.body);
+    const { id ,name,image, price, restaurant } = req.body;
+    console.log('c"est le nom  ',id);
 
     try {
-        const existingItem = await Menu.findOneAndUpdate({ _id: id }, { name, price, restaurant }, { new: true });
+        const existingItem = await Menu.findOneAndUpdate({ _id: id }, { name, price,image, restaurant }, { new: true });
 
         if (!existingItem) {
             return res.status(404).json({ message: 'Menu item not found' });
@@ -78,7 +77,7 @@ const updateMenuImage = async(req, res)=>{
 }
 
 const deleteMenuItem = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
 
     try {
         const deletedItem = await Menu.deleteOne({_id :id});
