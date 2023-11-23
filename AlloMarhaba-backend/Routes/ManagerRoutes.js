@@ -2,7 +2,7 @@ const express = require('express')
 const uploadfile = require('../Utils/multer');
 const router = express.Router();
 const{ createMenuItem} = require('../Controllers/MenuController');
-const RestaurantController = require("../Controllers/manager/RestaurantController");
+const RestaurantController = require("../Controllers/RestaurantController");
 const authMiddleware = require("../Middlewares/authMiddleware");
     
 

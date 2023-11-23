@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+
 import './index.css'
+import restaurantPhoto from '../../assets/images/bread-sandwich-poster_23-2148646030.jpg'
 
 function Restaurant() {
     const [restaurants, setRestaurants] = useState([]);
@@ -100,90 +103,47 @@ function Restaurant() {
         }
     };
 
-
     return (
         <div>
-            <label>
-                <input
-                    type="radio"
-                    name="searchType"
-                    value="name"
-                    onChange={handleRadioChange}
-                />
-                Search by name
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="searchType"
-                    value="cuisineType"
-                    onChange={handleRadioChange}
-                />
-                Search by category
-            </label>
-            <label>
-                <input
-                    type="radio"
-                    name="searchType"
-                    value="place"
-                    onChange={handleRadioChange}
-                />
-                Search by place
-            </label>
-            <h2>Restaurant List</h2>
-            <input type="text" placeholder='Search Restaurants ...' onChange={handleSearchByName} />
-
-            <div>
-                <h3>Cuisine Types:</h3>
-                {cuisineTypes.map((cuisineType) => (
-                    <label key={cuisineType._id}>
-                        <input
-                            type="radio"
-                            value={cuisineType._id}
-                            checked={selectedCuisineType === cuisineType._id}
-                            onChange={handleSearchByCuisineType}
-                        />
-                        {cuisineType.name}
-                    </label>
-                ))}
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Phone Number</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {restaurants.map((restaurant) => (
-                        <tr key={restaurant._id} onClick={() => setSelectedRestaurant(restaurant)}>
-                            <td>{restaurant.name}</td>
-                            <td>{restaurant.address}</td>
-                            <td>{restaurant.phone_number}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {selectedRestaurant && (
-                <div>
-                    <h3>Map</h3>
-                    <div style={{ width: '400px', height: '300px' }}>
-                        <iframe
-                            title="restaurant-map"
-                            width="100%"
-                            height="100%"
-                            frameBorder="0"
-                            // scrolling="no"
-                            // marginHeight="0"
-                            // marginWidth="0"
-                            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDJgIklIuxFQJF_rewtegFNBKXWKegQeEY&q=${selectedRestaurant.latitude},${selectedRestaurant.longitude}`}
-                        ></iframe>
+            <div className='d-flex justify-content-between'>
+                <div className='cuisine-type'>
+                    <span className='p-2'>Cuisines Type</span>
+                    <div className='cuisine-type-list'>
+                        <ul className='pl-0'>
+                            {cuisineTypes.map((cuisineType) => (
+                                <li className='mb-3' key={cuisineType._id}>
+                                    <label key={cuisineType._id}>
+                                        <input
+                                            type="checkbox"
+                                            className='mr-2'
+                                            value={cuisineType._id}
+                                            checked={selectedCuisineType === cuisineType._id}
+                                            onChange={handleSearchByCuisineType}
+                                        />
+                                        {cuisineType.name}
+                                    </label>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
-            )}
+                <div className='restaurants cotainer-fluid'>
+                    <div className='row'>
+                        {restaurants.map((restaurant) => (
+                            <div className='restaurants-cart mb-5 col-lg-4 col-md-6 col-sm-12'>
+                                <div>
+                                    <img src={restaurantPhoto} alt="" />
+                                </div>
+                                <div className='restau-info'>
+                                    <p className='restau-name text-center mb-0 p-2'>{restaurant.name}</p>
+                                    <hr className='w-50 d-flex justify-content-center m-auto' />
+                                    <p className='phone-adress-info text-center p-2 mb-0'>{restaurant.phone} - {restaurant.adress}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
