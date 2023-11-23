@@ -1,0 +1,36 @@
+.cuisine-type{
+    width: 15%;
+}
+
+span {
+    display: block;
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    margin-bottom: 25px;
+    color: white;
+    border-left: solid red 6px;
+}
+
+.restaurants {
+    width: 80%;
+}
+
+.restaurants-cart{
+    border: solid 2px #f9f9f9;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.restau-info{
+    background-color: #f9f9f9;
+}
+
+.restau-name {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.phone-adress-info {
+    font-size: 17px;
+    color: gray;
+}
