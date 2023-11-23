@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useSelector, useDispatch } from "react-redux";
-
 import { useState, useEffect } from "react";
 import { updateCartItems, removeFromCart } from "../slices/cartSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import "../assets/line__.css";
+import { Link } from "react-router-dom";
 
 function ShoppingCart({ hideCart }) {
     // Assuming your cart state is stored in Redux
@@ -24,10 +24,6 @@ function ShoppingCart({ hideCart }) {
             }
         );
     }, []);
-
-    const handleCheckout = () => {
-        console.log(position);
-    };
 
     const addQuantity = (item) => {
         const updatedItem = {
@@ -127,17 +123,17 @@ function ShoppingCart({ hideCart }) {
                     )}
                 </div>
                 <div>
-                    <button
+                    <Link
+                        to="/checkout"
                         className={
                             cartItems.length === 0
                                 ? "bg-gray-900 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed"
                                 : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         }
                         disabled={cartItems.length === 0}
-                        onClick={handleCheckout}
                     >
                         <span>Checkout</span>
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

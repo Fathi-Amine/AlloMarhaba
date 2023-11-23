@@ -22,6 +22,7 @@ import VerificationPage from "./pages/VerificationPage.jsx";
 import UserListPage from "./pages/AllUsersPage.jsx";
 import FillRestaurant from "./pages/manager/FillRestaurant.jsx";
 import Products from "./pages/client/Products.jsx";
+import Checkout from "./pages/client/Checkout.jsx";
 import "./index.css";
 
 const router = createBrowserRouter(
@@ -50,6 +51,7 @@ const router = createBrowserRouter(
                     path="/:restaurantName/products"
                     element={<Products />}
                 ></Route>
+                <Route path="/checkout" element={<Checkout />}></Route>
             </Route>
         </Route>
     )
