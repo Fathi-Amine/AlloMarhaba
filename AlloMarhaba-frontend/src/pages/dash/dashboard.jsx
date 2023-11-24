@@ -11,7 +11,7 @@ export default function DashboardNavbar() {
     return (
         
 <div>
-    <DashboardNavBar/>
+    {/* <DashboardNavBar/> */}
     <DashboardSideBar/>
     <DashboardTable/>
     
