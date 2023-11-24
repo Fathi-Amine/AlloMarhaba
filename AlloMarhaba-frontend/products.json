@@ -1,0 +1,26 @@
+[
+    {
+        "_id": "655f918c761aa9082a17c48b",
+        "name": "product 1",
+        "price": 100,
+        "image": "https://picsum.photos/200/300"
+    },
+    {
+        "_id": "655f9060761aa9082a17c485",
+        "name": "product 2",
+        "price": 200,
+        "image": "https://picsum.photos/200/300"
+    },
+    {
+        "_id": "655f769b761aa9082a17c3c2",
+        "name": "product 3",
+        "price": 300,
+        "image": "https://picsum.photos/200/300"
+    },
+    {
+        "_id": "655f6319a64b61851ad67225",
+        "name": "product 4",
+        "price": 400,
+        "image": "https://picsum.photos/200/300"
+    }
+]

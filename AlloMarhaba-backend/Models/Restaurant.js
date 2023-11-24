@@ -1,32 +1,57 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const RestaurantSchema = new mongoose.Schema({
-    user_id: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Assuming there is a User model
-        required: true,
-    },
-    address: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String, // Assuming you store the image URL
-        required: true,
+        ref: "User",
     },
     name: {
         type: String,
-        required: true,
-        unique: true,
+        required: [true, "Please Provide a name"],
+        minLength: 3,
+        maxLength: 50,
+    },
+    adress: {
+        type: String,
+        required: [true, "Please Provide a adress"],
+        minLength: 3,
+        maxLength: 50,
+    },
+    city: {
+        type: String,
+        required: [true, "Please Provide a city"],
+        minLength: 3,
+        maxLength: 50,
+    },
+    country: {
+        type: String,
+        required: [true, "Please Provide a country"],
     },
     phone: {
         type: String,
-        required: true,
+        required: [true, "Please Provide a phone"],
+        minLength: 3,
+        maxLength: 50,
     },
-    cuisine_type: {
+    image: {
         type: String,
-        required: true,
+        required: [true, "Please Provide a image"],
+    },
+    cuisineType: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, "Please Provide a cuisine Type"],
+        minLength: 3,
+        maxLength: 50,
+        ref: "CuisineType",
+    },
+    latitude: {
+        type: String,
+        required: [true, "Please Provide a latitude"],
+    },
+    longitude: {
+        type: String,
+        required: [true, "Please Provide a longitude"],
     },
 });
 
-module.exports = mongoose.model('Restaurant', RestaurantSchema);
+module.exports = mongoose.model("Restaurant", RestaurantSchema);

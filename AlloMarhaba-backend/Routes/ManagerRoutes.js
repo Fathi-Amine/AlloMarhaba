@@ -1,7 +1,13 @@
 const express = require('express')
 const router = express.Router();
+
 const{ createMenuItem ,getMenuItems , getMenuItem , updateMenuItem , updateMenuImage ,deleteMenuItem } = require('../Controllers/manager/MenuController');
 const validationMenu = require('../Utils/validationMenu')
+
+const{ createMenuItem} = require('../Controllers/MenuController');
+const RestaurantController = require("../Controllers/RestaurantController");
+const authMiddleware = require("../Middlewares/authMiddleware");
+
     
 
 router.post('/addMenu', validationMenu,createMenuItem)
@@ -14,6 +20,18 @@ router.post('/deleteMenu',deleteMenuItem)
 
 
 
-module.exports = router
+// router.post("/add", RestaurantController.createRestaurant);
+router.get(
+    "/checkRestaurant",
+    authMiddleware,
+    RestaurantController.getRestaurantByUserId
+);
+router.post(
+    "/restaurant/add",
+    authMiddleware,
+    RestaurantController.createRestaurant
+);
 
+
+module.exports = router;
 

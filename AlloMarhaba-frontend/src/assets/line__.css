@@ -1,0 +1,111 @@
+.line__ {
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    visibility: visible;
+    transform-origin: 50% 50%; /* Center the transform origin */
+    transform: scaleX(0);
+    transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+}
+
+/* add tranform: scaleX 1 when I hover on div with class father-div */
+.father-div:hover .line__ {
+    transform: scaleX(1);
+}
+
+.square__ {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    position: absolute;
+    left: 50%;
+    top: -2.5px;
+    transform: rotate(45deg) translateX(-50%);
+}
+
+.icon-father {
+    right: -46px;
+    width: 46px;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1px;
+    cursor: pointer;
+    /* background-color: blue; */
+    transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+}
+
+.father-div:hover .icon-father {
+    right: 10px;
+}
+.p_under_icon {
+    font-weight: 500;
+    padding: 3px 15px;
+    font-size: 10px;
+    line-height: normal;
+    color: white;
+    background-color: #dc2626;
+    border-radius: 3px;
+    top: 50%;
+    /* right: -83px; */
+    right: 60px;
+    opacity: 0;
+    transform: translateY(-50%);
+    text-align: center;
+    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0s;
+}
+
+.fff {
+    opacity: 1;
+}
+.p_under_icon::after {
+    /* triangle looking right */
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #dc2626;
+}
+
+.button__ {
+    background-color: #facc15 !important;
+}
+
+.cart-container_ss {
+    animation: fade-in 0.5s ease-in-out;
+}
+
+.cart-container {
+    position: fixed;
+    top: 0;
+    /* right: -100%;  */
+    right: -100%;
+    height: 100vh;
+    width: 380px; /* Adjust the width as needed */
+    overflow: hidden;
+    transition: right 0.5s ease-in-out;
+    z-index: 1000;
+}
+
+.cart-container-show {
+    /* right: 0;  */
+    right: 0;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
