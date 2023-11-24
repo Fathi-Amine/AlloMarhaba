@@ -24,7 +24,7 @@ import FillRestaurant from "./pages/manager/FillRestaurant.jsx";
 import Products from "./pages/client/Products.jsx";
 import Checkout from "./pages/client/Checkout.jsx";
 import "./index.css";
-import Restaurant from "./components/Restaurants/Search.jsx";
+import Restaurant from "./components/Restaurants/index.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
