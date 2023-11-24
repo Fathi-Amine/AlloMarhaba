@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function ShoppingCart({ hideCart }) {
     // Assuming your cart state is stored in Redux
-    const { cartItems } = useSelector((state) => state.cart);
+    const { cartItems, totalPrice } = useSelector((state) => state.cart);
     const [position, setPosition] = useState([0, 0]);
     const dispatch = useDispatch();
 
@@ -122,6 +122,7 @@ function ShoppingCart({ hideCart }) {
                         </ul>
                     )}
                 </div>
+                <div>total price: {totalPrice}</div>
                 <div>
                     <Link
                         to="/checkout"
