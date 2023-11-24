@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/Header.jsx';
 import { Outlet } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+// import { Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from '@mui/material/styles';
@@ -19,9 +19,9 @@ const App = () => {
         <CssBaseline />
         <Header />
         <ToastContainer />
-        <Container className="my-3">
+        {/* <Container className="my-3"> */}
           <Outlet />
-        </Container>
+        {/* </Container> */}
       </ThemeProvider>
     </>
   );

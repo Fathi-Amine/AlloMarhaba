@@ -3,7 +3,7 @@ import DashboardModal from "./DashModal";
 import { useShowMenusQuery, useShowMenuMutation, useDeleteMenuMutation } from "../../slices/menusApiSlice";
 // import Loader from "../Loader";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   CircularProgress

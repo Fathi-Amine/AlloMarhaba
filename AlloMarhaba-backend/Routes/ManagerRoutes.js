@@ -4,7 +4,7 @@ const router = express.Router();
 const{ createMenuItem ,getMenuItems , getMenuItem , updateMenuItem , updateMenuImage ,deleteMenuItem } = require('../Controllers/manager/MenuController');
 const validationMenu = require('../Utils/validationMenu')
 
-const{ createMenuItem} = require('../Controllers/MenuController');
+// const{ createMenuItem} = require('../Controllers/MenuController');
 const RestaurantController = require("../Controllers/RestaurantController");
 const authMiddleware = require("../Middlewares/authMiddleware");
 
