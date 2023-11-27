@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 
-import './index.css'
+// import './index.css'
 import restaurantPhoto from '../../assets/images/bread-sandwich-poster_23-2148646030.jpg'
 
 function Restaurant() {

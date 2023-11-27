@@ -9,6 +9,9 @@ function Products() {
     // get cartItems from localStorage
     useEffect(() => {
         document.title = `Products - ${restaurantName} - AlloMarhaba`;
+        // set restaurantName in localStorage
+        localStorage.setItem("restaurantName", restaurantName);
+        console.log("restaurantName", restaurantName);
         // get products from products.json
         fetch("/products.json")
             .then((response) => response.json())
