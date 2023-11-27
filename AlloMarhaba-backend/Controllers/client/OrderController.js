@@ -3,15 +3,17 @@ const OrderModel = require("../../Models/Order");
 
 async function createOrder(req, res) {
     try {
-        // select restaurant by name and select only the id
+        // Select restaurant by name and select only the id
         const restaurant = await RestaurantModel.findOne({
             name: req.body.restaurantName,
         });
 
-        console.log(req.body);
-        console.log(req.user.userId);
+        if (!restaurant) {
+            // Handle the case where the restaurant is not found
+            return res.status(404).json({ error: "Restaurant not found" });
+        }
 
-        // create order
+        // Create order
         const savedOrder = await OrderModel.create({
             user_id: req.user.userId,
             restaurant_id: restaurant._id,
@@ -20,6 +22,16 @@ async function createOrder(req, res) {
             checkoutDetails: req.body.checkoutDetails,
             arrive_longtiude: req.body.longitude,
             arrive_latitude: req.body.latitude,
+        });
+
+        const io = req.app.get("socketio");
+
+        // Emit the 'newOrder' event to the restaurant room
+        // io.emit("newOrder", {
+        //     order: savedOrder,
+        // });
+        io.to(`restaurant_${restaurant._id}`).emit("newOrder", {
+            order: savedOrder,
         });
 
         return res

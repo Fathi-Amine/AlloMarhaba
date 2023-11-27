@@ -41,6 +41,7 @@ function Checkout() {
                 withCredentials: true,
             })
             .then((res) => {
+                console.log("it works");
                 console.log(res);
             });
     };
