@@ -103,6 +103,88 @@ function Restaurant() {
         }
     };
 
+    {/* <label>
+                <input
+                    type="radio"
+                    name="searchType"
+                    value="name"
+                    onChange={handleRadioChange}
+                />
+                Search by name
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    name="searchType"
+                    value="cuisineType"
+                    onChange={handleRadioChange}
+                />
+                Search by category
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    name="searchType"
+                    value="place"
+                    onChange={handleRadioChange}
+                />
+                Search by place
+            </label>
+            <h2>Restaurant List</h2>
+            <input type="text" placeholder='Search Restaurants ...' onChange={handleSearchByName} />
+
+            <div>
+                <h3>Cuisine Types:</h3>
+                {cuisineTypes.map((cuisineType) => (
+                    <label key={cuisineType._id}>
+                        <input
+                            type="radio"
+                            value={cuisineType._id}
+                            checked={selectedCuisineType === cuisineType._id}
+                            onChange={handleSearchByCuisineType}
+                        />
+                        {cuisineType.name}
+                    </label>
+                ))}
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {restaurants.map((restaurant) => (
+                        <tr key={restaurant._id} onClick={() => setSelectedRestaurant(restaurant)}>
+                            <td>{restaurant.name}</td>
+                            <td>{restaurant.address}</td>
+                            <td>{restaurant.phone_number}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            {selectedRestaurant && (
+                <div>
+                    <h3>Map</h3>
+                    <div style={{ width: '400px', height: '300px' }}>
+                        <iframe
+                            title="restaurant-map"
+                            width="100%"
+                            height="100%"
+                            frameBorder="0"
+                            // scrolling="no"
+                            // marginHeight="0"
+                            // marginWidth="0"
+                            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDJgIklIuxFQJF_rewtegFNBKXWKegQeEY&q=${selectedRestaurant.latitude},${selectedRestaurant.longitude}`}
+                        ></iframe>
+                    </div>
+                </div>
+            )} */}
+
     return (
         <div>
             <div className='d-flex justify-content-between'>

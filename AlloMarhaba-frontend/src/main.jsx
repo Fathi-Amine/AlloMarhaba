@@ -25,6 +25,8 @@ import Products from "./pages/client/Products.jsx";
 import Checkout from "./pages/client/Checkout.jsx";
 import "./index.css";
 import Restaurant from "./components/Restaurants/index.jsx";
+import Commands from "./components/Commands/index.jsx";
+import Notification from "./components/Nottification/index.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -44,6 +46,14 @@ const router = createBrowserRouter(
             <Route
                 path="/restaurants"
                 element={<Restaurant />}
+            ></Route>
+            <Route
+                path="/commands"
+                element={<Commands />}
+            ></Route>
+            <Route
+                path="/notification"
+                element={<Notification />}
             ></Route>
             <Route path="" element={<PrivateRoute />}>
                 <Route path="/users" element={<UserListPage />}></Route>
