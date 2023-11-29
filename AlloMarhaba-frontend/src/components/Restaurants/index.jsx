@@ -187,13 +187,13 @@ function Restaurant() {
 
     return (
         <div>
-            <div className='d-flex justify-content-between'>
-                <div className='cuisine-type'>
-                    <span className='p-2'>Cuisines Type</span>
-                    <div className='cuisine-type-list'>
-                        <ul className='pl-0'>
+            <div className='flex justify-between'>
+                <div className='cuisine-type ml-4'>
+                    <span className='bg-black border-l-8 border-red-500 pl-3 p-2 text-white inline-block w-48'>Cuisines Type</span>
+                    <div className='cuisine-type-list mt-4'>
+                        <ul className=''>
                             {cuisineTypes.map((cuisineType) => (
-                                <li className='mb-3' key={cuisineType._id}>
+                                <li className='m-3' key={cuisineType._id}>
                                     <label key={cuisineType._id}>
                                         <input
                                             type="checkbox"
@@ -209,17 +209,23 @@ function Restaurant() {
                         </ul>
                     </div>
                 </div>
-                <div className='restaurants cotainer-fluid'>
-                    <div className='row'>
+                <div className="restaurants">
+                    <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
                         {restaurants.map((restaurant) => (
-                            <div className='restaurants-cart mb-5 col-lg-4 col-md-6 col-sm-12'>
+                            <div key={restaurant.id} className="restaurants-cart">
                                 <div>
-                                    <img src={restaurantPhoto} alt="" />
+                                    <img
+                                        src={restaurantPhoto}
+                                        alt={restaurant.name}
+                                        className=""
+                                    />
                                 </div>
-                                <div className='restau-info'>
-                                    <p className='restau-name text-center mb-0 p-2'>{restaurant.name}</p>
-                                    <hr className='w-50 d-flex justify-content-center m-auto' />
-                                    <p className='phone-adress-info text-center p-2 mb-0'>{restaurant.phone} - {restaurant.adress}</p>
+                                <div className="restau-info text-center">
+                                    <p className="restau-name">{restaurant.name}</p>
+                                    <hr className="w-1/2 mx-auto my-2" />
+                                    <p className="phone-adress-info p-2">
+                                        {restaurant.phone} - {restaurant.adress}
+                                    </p>
                                 </div>
                             </div>
                         ))}

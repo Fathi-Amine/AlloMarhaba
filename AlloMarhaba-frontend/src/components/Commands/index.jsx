@@ -4,15 +4,47 @@ import { io } from "socket.io-client"
 
 const Commands = () => {
     const [notification, setNotification] = useState(false)
+    const [commands, setCommands] = useState([
+        {
+            id: 1,
+            name: 'pizza',
+            isReady: false,
+            claimed: false
+        },
+        {
+            id: 2,
+            name: 'tacos',
+            isReady: false,
+            claimed: false
+        },
+        {
+            id: 3,
+            name: 'lazania',
+            isReady: false,
+            claimed: false
+        }
+        // Other commands...
+      ]);
     const [socket] = useState(io('http://localhost:5000'));
     const user = "manager"
 
 
-    const handleNotification = (commandName, receiverName) => {
-        setNotification(true);
+    const handleNotification = (commandName) => {
+        const updatedCommands = commands.map(command => {
+            if (command.name === commandName) {
+              return {
+                ...command,
+                isReady: true 
+              };
+            }
+            return command;
+          });
+
+          setCommands(updatedCommands);
+          console.log(commands)
+
         socket.emit('sendNotification', {
             senderName: user,
-            receiverName,
             message: `Command ${commandName} is ready`,
         });
     };
@@ -20,57 +52,21 @@ const Commands = () => {
 
     useEffect(() => {
         const socket = (io("http://localhost:5000"))
-        console.log(socket)
-    }, [])
+        // console.log(socket)
+        console.log(commands)
+    }, [commands])
 
-    const commands = [
-        {
-            id: 1,
-            name: 'pizza',
-            isReady: false,
-            deliveryPersons: [
-                {
-                    id: 101,
-                    name: "john"
-                },
-            ],
-        },
-        {
-            id: 1,
-            name: 'tacos',
-            isReady: false,
-            deliveryPersons: [
-                {
-                    id: 101,
-                    name: "doe"
-                },
-            ],
-        },
-        {
-            id: 1,
-            name: 'lazania',
-            isReady: false,
-            deliveryPersons: [
-                {
-                    id: 101,
-                    name: "marcner"
-                },
-            ],
-        }
-    ]
+    
     return (
         <div>
             {commands.map(command => (
                 <div key={command.id}>
-                    {command.deliveryPersons.map(person => (
-                        <div key={person.id}>
-                            <h3>{command.name}</h3>
-                            <span>Livreur {person.name}</span>
-                            <button onClick={() => handleNotification(command.name, person.name)}>
-                                Mark as Ready
-                            </button>
-                        </div>
-                    ))}
+                    <h3>{command.name}</h3>
+                    <div>
+                        <button onClick={() => handleNotification(command.name)}>
+                            Mark as Ready
+                        </button>
+                    </div>
                 </div>
             ))}
         </div>

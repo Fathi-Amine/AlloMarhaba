@@ -10,7 +10,6 @@ const authRoutes = require("./Routes/AuthRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 const mailRoutes = require("./Routes/MailRoutes");
 const managaerRoutes = require("./Routes/ManagerRoutes");
-const clientRoutes = require("./Routes/ClientRoutes");
 const restaurantRoutes = require("./Routes/RestaurantRoutes");
 const { urlencoded } = require("express");
 const cookieParser = require("cookie-parser");
@@ -32,24 +31,24 @@ const io = socketio(server, {
     }
   });
 
-  io.on('connection', (socket) => {
-    console.log('A user connected');
-    const socketId = socket.id;
+//   io.on('connection', (socket) => {
+//     console.log('A user connected');
+//     const socketId = socket.id;
 
-    // Listen for 'sendNotification' event from the client
-    socket.on('sendNotification', (data) => {
-        // Extract data received from the client
-        const { senderName, receiverName, message } = data;
+//     // Listen for 'sendNotification' event from the client
+//     socket.on('sendNotification', (data) => {
 
-        console.log(`Received notification from ${senderName} for ${receiverName}: ${message}`);
-        // Emit the notification to the intended delivery person
-        io.to(socketId).emit("notification_8JDQuZDPjbKBPbKpAAAk", message);
-    });
+//         // Extract data received from the client
+//         const { senderName, message } = data;
 
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
-    });
-});
+//         console.log( ivery person
+//         io.emit('notificationForDeliveryPersons', message);
+//     });
+
+//     socket.on('disconnect', () => {
+//         console.log('A user disconnected');
+//     });
+// });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc));
 
@@ -67,7 +66,6 @@ app.use("/api/", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/mail", mailRoutes);
 app.use("/api/manager", managaerRoutes);
-app.use("/api/client", clientRoutes);
 app.use("/api", restaurantRoutes);
 
 app.use(errorHandlerMiddleware);
