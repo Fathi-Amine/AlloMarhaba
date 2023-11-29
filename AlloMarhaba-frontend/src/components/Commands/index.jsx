@@ -9,19 +9,16 @@ const Commands = () => {
             id: 1,
             name: 'pizza',
             isReady: false,
-            claimed: false
         },
         {
             id: 2,
             name: 'tacos',
             isReady: false,
-            claimed: false
         },
         {
             id: 3,
             name: 'lazania',
             isReady: false,
-            claimed: false
         }
         // Other commands...
       ]);
@@ -56,7 +53,23 @@ const Commands = () => {
         console.log(commands)
     }, [commands])
 
-    
+    // const commands = [
+    //     {
+    //         id: 1,
+    //         name: 'pizza',
+    //         isReady: false,
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'tacos',
+    //         isReady: false,
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'lazania',
+    //         isReady: false,
+    //     }
+    // ]
     return (
         <div>
             {commands.map(command => (

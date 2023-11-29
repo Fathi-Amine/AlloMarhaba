@@ -17,7 +17,7 @@ const Notification = () => {
             console.log(socket);
         });
 
-        socket.on("notificationForDeliveryPersons", (message) => {
+        socket.on("sendNotification", (message) => {
             // Handle the received notification here
             console.log(`Received notification: ${message}`);
             setNotifications(prev => ([...prev, message])); // Update the notification state
@@ -27,25 +27,6 @@ const Notification = () => {
             socket.disconnect(); // Clean up the socket connection on unmount
         };
     }, []);
-
-    const handleClaimCommand = (commandId) => {
-        const updatedCommands = commands.map(command => {
-          if (command.id === commandId) {
-            return {
-              ...command,
-              claimedBy: user, // Track who claimed the command
-              claimed: true // Mark the command as claimed
-            };
-          }
-          return command;
-        });
-      
-        setCommands(updatedCommands);
-      
-        // Disable notifications for this command for other persons
-        // Emit an event to the backend to notify others that the command has been claimed
-        socket.emit('claimCommand', { commandId, user });
-      };
 
     return (
         <div>
