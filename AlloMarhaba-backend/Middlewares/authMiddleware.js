@@ -6,8 +6,11 @@ const { attachCookieToResponse } = require("../Utils/index");
 
 const authenticationMiddleware = async (req, res, next) => {
     const { refreshToken, accessToken } = req.signedCookies;
+    console.log("bbbb");
+    // console.log(req.signedCookies);
     try {
         if (accessToken) {
+            // console.log(accessToken);
             const payload = verifyToken(accessToken);
             req.user = payload.user;
             return next();

@@ -135,7 +135,6 @@ const Header = () => {
                                             <>
                                                 <button
                                                     onClick={() => {
-                                                        console.log("logout");
                                                         logoutHandler();
                                                     }}
                                                 >

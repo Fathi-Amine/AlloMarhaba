@@ -1,29 +1,69 @@
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
+import axios from "axios";
 export default function DashboardNavBar() {
     const [newOrderCount, setNewOrderCount] = useState(0);
+    const [currentRestaurantID, setCurrentRestaurantID] = useState(null);
+
     useEffect(() => {
-        const socket = io("http://localhost:5000");
+        async function getRestaurant() {
+            try {
+                const response = await axios.get(
+                    "http://localhost:5000/api/manager/checkRestaurant",
+                    {
+                        withCredentials: true,
+                    }
+                );
+                setCurrentRestaurantID(response.data.data._id);
+                const socket = io("http://localhost:5000");
 
-        const restaurantId = "655caf20504d37a13ffd09f3";
+                const restaurantId = response.data.data._id;
+                console.log("Restaurant ID:", restaurantId);
 
-        socket.emit("joinRestaurantRoom", restaurantId);
+                socket.emit("joinRestaurantRoom", restaurantId);
+                socket.on("connect", () => {
+                    console.log("Connected to socket");
+                });
 
-        socket.on("connect", () => {
-            console.log("Connected to socket");
-        });
+                socket.on("newOrder", (data) => {
+                    console.log("New Order Received:", data);
+                    setNewOrderCount((prev) => prev + 1);
+                });
 
-        socket.on("newOrder", (data) => {
-            console.log("New Order Received:", data);
-            setNewOrderCount((prev) => prev + 1);
-        });
+                return () => {
+                    // Cleanup on component unmount
+                    socket.disconnect();
+                };
+            } catch (error) {
+                console.error("Error fetching restaurant:", error);
+            }
+        }
 
-        return () => {
-            // Cleanup on component unmount
-            socket.disconnect();
-        };
+        getRestaurant();
     }, []);
+
+    // useEffect(() => {
+    //     const socket = io("http://localhost:5000");
+
+    //     const restaurantId = currentRestaurantID;
+    //     console.log("Restaurant ID:", restaurantId);
+
+    //     socket.emit("joinRestaurantRoom", restaurantId);
+    //     socket.on("connect", () => {
+    //         console.log("Connected to socket");
+    //     });
+
+    //     socket.on("newOrder", (data) => {
+    //         console.log("New Order Received:", data);
+    //         setNewOrderCount((prev) => prev + 1);
+    //     });
+
+    //     return () => {
+    //         // Cleanup on component unmount
+    //         socket.disconnect();
+    //     };
+    // }, []);
     return (
         <div>
             <nav className=" top-0 z-50 w-full  border-b border-gray-200 bg-[3b757f]">

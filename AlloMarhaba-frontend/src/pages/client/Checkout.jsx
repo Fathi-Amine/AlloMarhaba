@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Checkout() {
     const [position, setPosition] = useState([0, 0]);
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const { cartItems, totalPrice } = useSelector((state) => state.cart);
+
+    useEffect(() => {
+        if (cartItems.length === 0) {
+            navigate("/restaurants");
+        }
+    }, []);
 
     const handleSubmit = () => {
         if (
@@ -35,7 +43,7 @@ function Checkout() {
             longitude: position[0],
             latitude: position[1],
         };
-        console.log(data);
+        console.log("submit");
         axios
             .post("http://localhost:5000/api/client/orders", data, {
                 withCredentials: true,
@@ -43,6 +51,9 @@ function Checkout() {
             .then((res) => {
                 console.log("it works");
                 console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
             });
     };
     return (

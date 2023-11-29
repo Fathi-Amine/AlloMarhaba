@@ -43,6 +43,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/mail", mailRoutes);
 app.use("/api/manager", managaerRoutes);
 app.use("/api", restaurantRoutes);
+console.log("test");
 app.use("/api/client", clientRoutes);
 
 app.use(errorHandlerMiddleware);
