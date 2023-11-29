@@ -17,9 +17,6 @@ router.post('/showMenu',getMenuItem)
 router.post('/updateMenu',updateMenuItem)
 router.post('/deleteMenu',deleteMenuItem)
 
-
-
-
 // router.post("/add", RestaurantController.createRestaurant);
 router.get(
     "/checkRestaurant",
@@ -31,6 +28,8 @@ router.post(
     authMiddleware,
     RestaurantController.createRestaurant
 );
+
+router.post('/changeStatus' , authMiddleware, changeStatusOrders)
 
 
 module.exports = router;

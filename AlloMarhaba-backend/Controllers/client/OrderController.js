@@ -31,6 +31,37 @@ async function createOrder(req, res) {
     }
 }
 
+const changeStatusOrders = async(req , res)=>{
+    try {
+        const {status} = req.body
+        const user_id = req.user.userId
+        const getRestaurant = await RestaurantModel.findOne({
+            user: user_id,
+        }).select('_id');
+        const restaurantId = getRestaurant._id.toString(); // Convert ObjectId t
+        if (restaurantId) {
+            const orders = await OrderModel.findOneAndUpdate( {restaurant_id : restaurantId},{status})
+            if (orders) {
+                socket.emit('sendNotification', {
+                    message: `Command ${commandName} is ready`,
+                });
+                res.status(200).json({
+                    message : "status updated succusefly"
+                }) 
+            }
+            else{
+                res.status(200).json({
+               message : "status is not changed"
+               })
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+
+    }
+}
+
 module.exports = {
     createOrder,
+    changeStatusOrders
 };

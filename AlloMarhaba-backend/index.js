@@ -31,24 +31,26 @@ const io = socketio(server, {
     }
   });
 
-//   io.on('connection', (socket) => {
-//     console.log('A user connected');
-//     const socketId = socket.id;
+  io.on('connection', (socket) => {
+    console.log('A user connected');
+    const socketId = socket.id;
 
-//     // Listen for 'sendNotification' event from the client
-//     socket.on('sendNotification', (data) => {
+    // Listen for 'sendNotification' event from the client
+    // socket.on('sendNotification', (data) => {
 
-//         // Extract data received from the client
-//         const { senderName, message } = data;
+    //     // Extract data received from the client
+    //     const { senderName, message } = data;
 
-//         console.log( ivery person
-//         io.emit('notificationForDeliveryPersons', message);
-//     });
+    //     console.log(`Received notification from ${senderName}: ${message}`);
+        
+    //     // Emit the notification to the intended delivery person
+    //     io.emit('notificationForDeliveryPersons', message);
+    // });
 
-//     socket.on('disconnect', () => {
-//         console.log('A user disconnected');
-//     });
-// });
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
+    });
+});
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc));
 
