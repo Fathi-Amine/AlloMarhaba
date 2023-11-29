@@ -1,23 +1,28 @@
 require("dotenv").config();
-require("express-async-errors");
 const express = require("express");
 const app = express();
+
 const swaggerJsdoc = require("./Config/swagger");
 const swaggerUi = require("swagger-ui-express");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const authRoutes = require("./Routes/AuthRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 const mailRoutes = require("./Routes/MailRoutes");
 const managaerRoutes = require("./Routes/ManagerRoutes");
 const clientRoutes = require("./Routes/ClientRoutes");
 const restaurantRoutes = require("./Routes/RestaurantRoutes");
-const { urlencoded } = require("express");
-const cookieParser = require("cookie-parser");
 const connectToDatabase = require("./Database/connect");
 const helmet = require("helmet");
 const cors = require("cors");
 const rateLimiter = require("express-rate-limit");
 const errorHandlerMiddleware = require("./Middlewares/errorHandler");
+const http = require("http");
+const { initializeSocket } = require("./socket");
+const cookieParser = require("cookie-parser");
+
+const server = http.createServer(app);
+const io = initializeSocket(server);
+app.set("socketio", io);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc));
 
@@ -28,15 +33,18 @@ app.use(
     })
 );
 app.use(express.json());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(helmet());
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+
+// Add your routes
 app.use("/api/", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/mail", mailRoutes);
 app.use("/api/manager", managaerRoutes);
-app.use("/api/client", clientRoutes);
 app.use("/api", restaurantRoutes);
+console.log("test");
+app.use("/api/client", clientRoutes);
 
 app.use(errorHandlerMiddleware);
 
@@ -44,7 +52,7 @@ const start = async () => {
     try {
         await connectToDatabase(process.env.MONGODB_URI);
 
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log(`Listening to ${PORT}`);
         });
     } catch (e) {
@@ -53,3 +61,4 @@ const start = async () => {
 };
 
 start();
+module.exports = { io, server, app };
