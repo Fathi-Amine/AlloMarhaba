@@ -17,8 +17,6 @@ import { addToCart } from "../slices/cartSlice";
 const Header = () => {
     const { userInfo } = useSelector((state) => state.auth);
     const { cartItems } = useSelector((state) => state.cart);
-    // console.log(cartItems);
-    // State to manage shopping cart visibility
     const [showCart, setShowCart] = useState(false);
 
     const dispatch = useDispatch();
@@ -36,7 +34,7 @@ const Header = () => {
     };
     return (
         <header>
-            {/* Show the ShoppingCart component based on the state */}
+
             <div
                 className={`cart-container ${
                     showCart ? "cart-container-show" : ""
