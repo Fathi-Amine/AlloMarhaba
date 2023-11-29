@@ -4,7 +4,6 @@ const MenuSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
     },
     image: {
         type: String, // Assuming you store the image URL

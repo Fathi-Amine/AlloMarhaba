@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
 const RestaurantSchema = new mongoose.Schema({
     user: {
@@ -41,9 +40,7 @@ const RestaurantSchema = new mongoose.Schema({
     cuisineType: {
         type: mongoose.Schema.Types.ObjectId,
         required: [true, "Please Provide a cuisine Type"],
-        minLength: 3,
-        maxLength: 50,
-        ref: 'CuisineType'
+        ref: "CuisineType",
     },
     latitude: {
         type: String,

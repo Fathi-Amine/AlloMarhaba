@@ -1,6 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
     cartItems: [],
+    totalPrice: 0, // Add a new property for total price
+};
+
+const calculateTotalPrice = (cartItems) => {
+    return cartItems.reduce((total, item) => {
+        return total + item.quantity * item.price;
+    }, 0);
 };
 
 const cartSlice = createSlice({
@@ -8,15 +16,13 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            // add quantity to item
             const item = action.payload;
             const newItem = {
                 ...item,
                 quantity: 1,
             };
-            console.log(newItem);
             state.cartItems.push(newItem);
-            // get items from local storage and new item
+            state.totalPrice = calculateTotalPrice(state.cartItems);
 
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         },
@@ -25,12 +31,14 @@ const cartSlice = createSlice({
             state.cartItems = state.cartItems.filter(
                 (item) => item._id !== itemIdToRemove
             );
-            // remove from local storage
+            state.totalPrice = calculateTotalPrice(state.cartItems);
+
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         },
-
         updateCartItems: (state, action) => {
             state.cartItems = action.payload;
+            state.totalPrice = calculateTotalPrice(state.cartItems);
+
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         },
     },

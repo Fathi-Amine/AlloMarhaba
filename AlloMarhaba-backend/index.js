@@ -9,6 +9,7 @@ const authRoutes = require("./Routes/AuthRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 const mailRoutes = require("./Routes/MailRoutes");
 const managaerRoutes = require("./Routes/ManagerRoutes");
+const clientRoutes = require("./Routes/ClientRoutes");
 const restaurantRoutes = require("./Routes/RestaurantRoutes");
 const { urlencoded } = require("express");
 const cookieParser = require("cookie-parser");
@@ -34,6 +35,7 @@ app.use("/api/", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/mail", mailRoutes);
 app.use("/api/manager", managaerRoutes);
+app.use("/api/client", clientRoutes);
 app.use("/api", restaurantRoutes);
 
 app.use(errorHandlerMiddleware);

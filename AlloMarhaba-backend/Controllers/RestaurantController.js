@@ -1,6 +1,7 @@
 const validateRestaurant = require("../validator/restaurantValidator");
 const Restaurant = require("../Models/Restaurant");
 const CuisineType = require("../Models/CuisineType");
+const User = require("../Models/Users");
 
 
 async function createRestaurant(req, res) {
@@ -100,7 +101,14 @@ const searchByCuisineType = async (req, res) => {
     }
 };
 
-const displayRestarants = async (req, res) => {
+const searchByPlace = async (req, res)=>{
+    const city = req.params.place
+    const restaurants = await Restaurant.find({city:city}).select('name latitude longitude image cuisineType').populate('cuisineType')
+    console.log(restaurants)
+    res.json({restaurants})
+}
+
+const displayRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
         res.json({ restaurants });
@@ -114,5 +122,6 @@ module.exports = {
     getRestaurantByUserId,
     searchRestaurantByName,
     searchByCuisineType,
-    displayRestarants
+    displayRestaurants,
+    searchByPlace
 };
