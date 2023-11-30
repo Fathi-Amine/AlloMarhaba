@@ -1,4 +1,4 @@
-import React from "react";
+import AuthorizedRoute from "./components/AuthorizedRoute.jsx";
 
 import ReactDOM from "react-dom/client";
 import {
@@ -30,7 +30,15 @@ import Restaurant from "./components/Restaurants/index.jsx";
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route>
-            <Route path="/dash" element={<DashboardNavbar />}></Route>
+            <Route
+                path="/dash"
+                element={
+                    <AuthorizedRoute
+                        requiredRole="client"
+                        element={<DashboardNavbar />}
+                    />
+                }
+            ></Route>
             <Route path="/" element={<App />}>
                 <Route index={true} path="/" element={<Home />}></Route>
                 <Route path="/login" element={<LoginPage />}></Route>
