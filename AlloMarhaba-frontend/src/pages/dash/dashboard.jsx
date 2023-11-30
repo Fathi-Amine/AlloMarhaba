@@ -1,26 +1,14 @@
-import React from "react";
 import DashboardNavBar from "../../components/dashComponents/DashNavBar";
 import DashboardSideBar from "../../components/dashComponents/DashSideBar";
 import DashboardTable from "../../components/dashComponents/DashTable";
-import 'flowbite';
-
-
+import "flowbite";
 
 export default function DashboardNavbar() {
-
     return (
-        
-<div>
-    {/* <DashboardNavBar/> */}
-    <DashboardSideBar/>
-    <DashboardTable/>
-    
-</div>
-
-
-
-
-
-
+        <div>
+            <DashboardNavBar />
+            <DashboardSideBar />
+            <DashboardTable />
+        </div>
     );
 }

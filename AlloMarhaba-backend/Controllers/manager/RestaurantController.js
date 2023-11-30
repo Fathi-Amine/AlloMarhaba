@@ -33,14 +33,12 @@ async function createRestaurant(req, res) {
 }
 
 async function getRestaurantByUserId(req, res) {
-    console.log("cdcdccd");
     let id = req.user.userId;
     // let id = "6555d5741c8149f78acd28c8";
     try {
         const restaurant = await Restaurant.find({
             user: id,
         });
-        console.log(restaurant[0]);
         if (restaurant[0] == null) {
             console.log("No restaurant found");
             return res.json({

@@ -131,6 +131,13 @@ const Header = () => {
                                     <Nav className="ms-auto">
                                         {userInfo ? (
                                             <>
+                                                <button
+                                                    onClick={() => {
+                                                        logoutHandler();
+                                                    }}
+                                                >
+                                                    logout
+                                                </button>
                                                 <NavDropdown id="username">
                                                     <LinkContainer to="/profile">
                                                         <NavDropdown.Item>
