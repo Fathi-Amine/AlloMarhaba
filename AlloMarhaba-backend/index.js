@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const express = require("express");
 const app = express();
@@ -37,16 +38,24 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(helmet());
 
-// Add your routes
-app.use("/api/", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/mail", mailRoutes);
-app.use("/api/manager", managaerRoutes);
-app.use("/api", restaurantRoutes);
-console.log("test");
-app.use("/api/client", clientRoutes);
+app.use('/api/', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/mail', mailRoutes);
+app.use('/api/manager', managaerRoutes);
+app.use('/api/client', clientRoutes);
+app.use('/api', restaurantRoutes);
 
 app.use(errorHandlerMiddleware);
+
+// const Order = require('./Models/Order');
+// Order.schema.post('findOneAndUpdate', function (doc) {
+//     io.emit('orderStatusChanged', {  status: doc.status });
+    
+// });
+
+// io.on('connection', (socket) => {
+//     console.log('A client connected');
+// });
 
 const start = async () => {
     try {

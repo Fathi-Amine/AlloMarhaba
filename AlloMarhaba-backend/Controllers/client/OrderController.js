@@ -1,6 +1,7 @@
 const RestaurantModel = require("../../Models/Restaurant");
 const OrderModel = require("../../Models/Order");
 
+
 async function createOrder(req, res) {
     try {
         // Select restaurant by name and select only the id
@@ -41,8 +42,125 @@ async function createOrder(req, res) {
         console.log(err);
         return res.status(400).send({ error: err });
     }
+
+    
+}
+
+const getOrders = async (req , res)=>{
+
+    
+  
+     try {
+
+        const user_id = req.user.userId
+        const getRestaurant = await RestaurantModel.findOne({
+            user: user_id,
+        }).select('_id');
+        const restaurantId = getRestaurant._id.toString(); // Convert ObjectId to string
+        if (getRestaurant) {
+
+            console.log('for restau id',restaurantId);
+        const orders = await OrderModel.find({
+            restaurant_id : restaurantId
+        }).populate('user_id', 'username')
+        .populate({
+            path: 'menus.menu_id',
+            model: 'Menu',
+          });
+        
+        if (orders) {
+            res.status(201).json({
+                message : 'voila les orders',
+                data : orders
+            })            
+        }else{
+            res.status(204).json({
+                message : "vous avez pas des command pour votre restaurant"
+            })
+        }
+
+        }else{
+
+            res.status(204).json({
+                message : "pas de restaurant pour vous"
+            })
+        }
+       
+     } catch(error) { 
+        return res.status(400).json({ error: error.message });
+    
+     } 
+
+
+
+
+}
+const getCLientOrders = async(req , res)=>{
+
+    try {
+        const client_id = req.user.userId
+        const clientOrder = await OrderModel.find({
+            user_id : client_id
+        })
+
+        if (Object.keys(clientOrder).length > 0)  {
+            res.json({
+
+                message : "voici votre command",
+                data : clientOrder
+            })
+        }else {
+
+            res.json({
+                message : "pas de command pour vous "
+            })
+        }
+
+    
+        
+    } catch (error) {
+        console.log(error.message)
+        
+    }
+
+
+}
+const changeStatusOrders = async(req , res)=>{
+
+    try {
+        const {id , status} = req.body;
+        console.log(status);
+
+        const orders = await OrderModel.findOneAndUpdate( {_id : id},{status})
+        const io = req.app.get("socketio"); 
+        if (orders) {
+            io.emit('orderStatusChanged', { ordersData : orders });
+            
+            res.status(200).json({
+                message : "status updated succusefly"
+            }) 
+        
+        }
+        else{
+            res.status(200).json({
+            message : "status is not changed"
+            })
+        }
+            
+        
+    } catch (error) {
+        console.log(error.message);
+        
+    }
+
+
+
+
 }
 
 module.exports = {
     createOrder,
+    getOrders,
+    changeStatusOrders,
+    getCLientOrders
 };
