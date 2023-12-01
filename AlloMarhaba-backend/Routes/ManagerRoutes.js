@@ -1,8 +1,15 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router();
 
-const{ createMenuItem ,getMenuItems , getMenuItem , updateMenuItem , updateMenuImage ,deleteMenuItem } = require('../Controllers/manager/MenuController');
-const validationMenu = require('../Utils/validationMenu')
+const {
+    createMenuItem,
+    getMenuItems,
+    getMenuItem,
+    updateMenuItem,
+    updateMenuImage,
+    deleteMenuItem,
+} = require("../Controllers/manager/MenuController");
+const validationMenu = require("../Utils/validationMenu");
 
 // const{ createMenuItem} = require('../Controllers/MenuController');
 const RestaurantController = require("../Controllers/RestaurantController");
@@ -36,6 +43,4 @@ router.post(
     RestaurantController.createRestaurant
 );
 
-
 module.exports = router;
-

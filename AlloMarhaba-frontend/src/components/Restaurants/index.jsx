@@ -1,22 +1,35 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-// import 'bootstrap/dist/css/bootstrap.css';
-
-// import './index.css'
+import { useEffect, useState } from 'react';
+import Loader from "../loaders/ThemeLoader.jsx";
+import 'bootstrap/dist/css/bootstrap.css';
+// import './index.css';
 import restaurantPhoto from '../../assets/images/bread-sandwich-poster_23-2148646030.jpg'
+// import LeafletGeoCoder from "../MapComponents/LeafletGeoCoder.jsx";
+import {MapContainer, TileLayer, Marker,Popup } from "react-leaflet";
+import "leaflet-control-geocoder/dist/Control.Geocoder.css"
+import "leaflet-control-geocoder/dist/Control.Geocoder.js"
+import '../../App.css'
+import {Link} from "react-router-dom";
 
 function Restaurant() {
+    const position = [34.020882, -6.841650]
     const [restaurants, setRestaurants] = useState([]);
     const [cuisineTypes, setCuisineTypes] = useState([]);
     const [selectedCuisineType, setSelectedCuisineType] = useState('');
     const [selectedRestaurant, setSelectedRestaurant] = useState(null);
     const [searchType, setSearchType] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const [searchPlace, setSearchPlace] = useState('');
+    const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+    const [mapMarkerLocations, setMapMarkerLocations] = useState([]);
+    const [map, setMap] = useState(null);
 
 
     async function fetchRestaurants() {
         try {
             const response = await axios.get('http://localhost:5000/api/restaurants');
             setRestaurants(response.data.restaurants);
+            setIsLoading(false)
         } catch (error) {
             console.error('Error fetching restaurants:', error);
         }
@@ -41,12 +54,22 @@ function Restaurant() {
             } else if (selectedType === 'cuisineType') {
                 apiUrl = 'http://localhost:5000/api/restaurants/searchByCuisineType';
             } else if (selectedType === 'place') {
-                apiUrl = 'http://localhost:5000/api/restaurants/searchByPlace';
+                setSearchButtonClicked(true);
+                apiUrl = `http://localhost:5000/api/restaurants/search/searchByPlace/${searchPlace}`;
+                const response = await axios.get(apiUrl);
+                const placesData = response.data;
+
+                if (placesData && Array.isArray(placesData.restaurants)) {
+                    // Update the state or pass the data to the LeafletGeoCoder component
+                    setMapMarkerLocations(placesData.restaurants);
+
+                }
+                console.log(mapMarkerLocations)
             }
 
-            const response = await axios.get(apiUrl);
+            // const response = await axios.get(apiUrl);
 
-            console.log(data);
+            // console.log(response);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -92,7 +115,6 @@ function Restaurant() {
         const cuisineTypeId = e.target.value;
         try {
             setSelectedCuisineType(cuisineTypeId);
-            // console.log(selectedCuisineType);
             const response = await axios.get(`http://localhost:5000/api/restaurants/search/cuisine-type/${cuisineTypeId}`);
             const result = response.data.restaurants;
             if (result) {
@@ -103,8 +125,45 @@ function Restaurant() {
         }
     };
 
+    const handlePlaceSearchChange = () => {
+        setSearchType('place');
+    };
+
+    const handleSearchByPlace = (inputValue) => {
+        console.log(inputValue)
+    }
+    useEffect(() => {
+        if (map && mapMarkerLocations && Array.isArray(mapMarkerLocations) && mapMarkerLocations.length > 0) {
+            const bounds = L.latLngBounds(mapMarkerLocations.map((location) => [location.latitude, location.longitude]));
+            map.fitBounds(bounds);
+        }
+    }, [map, mapMarkerLocations]);
+
     return (
+
         <div>
+            <div>
+                <label>
+                    <input
+                        type="radio"
+                        value="place"
+                        checked={searchType === 'place'}
+                        onChange={handlePlaceSearchChange}
+                    />
+                    Search by Place
+                </label>
+                {searchType === 'place' && (
+                    <input
+                        style={{display:'block'}}
+                        type="text"
+                        placeholder="Enter Place"
+                        value={searchPlace}
+                        onChange={(e) => setSearchPlace(e.target.value)}
+                    />
+                )}
+                <button onClick={() => searchType === 'place' && performSearch(searchType)}>Search</button>
+            </div>
+
             <div className='d-flex justify-content-between'>
                 <div className='cuisine-type'>
                     <span className='p-2'>Cuisines Type</span>
@@ -127,10 +186,11 @@ function Restaurant() {
                         </ul>
                     </div>
                 </div>
+                {isLoading && <Loader />}
                 <div className='restaurants cotainer-fluid'>
                     <div className='row'>
-                        {restaurants.map((restaurant) => (
-                            <div className='restaurants-cart mb-5 col-lg-4 col-md-6 col-sm-12'>
+                        {restaurants.map((restaurant, index) => (
+                            <div key={index} className='restaurants-cart mb-5 col-lg-4 col-md-6 col-sm-12'>
                                 <div>
                                     <img src={restaurantPhoto} alt="" />
                                 </div>
@@ -143,6 +203,38 @@ function Restaurant() {
                         ))}
                     </div>
                 </div>
+            </div>
+            <div>
+                {searchButtonClicked && searchType === 'place' && (
+                    <MapContainer
+                        center={[34.020882, -6.841650]}  // Set the center to Rabat, Morocco
+                        zoom={7}
+                        style={{ height: '100vh' }}
+                        whenCreated={setMap}
+                    >
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+
+                        {mapMarkerLocations.map((location, index) => (
+                            <Marker
+                                key={index}
+                                position={[location.latitude, location.longitude]}
+                                style={{position:'relative'}}
+                            >
+                                <Popup >
+                                    <div>
+                                        <h3 style={{fontSize:'16px', width:'151px'}}>{location.name}</h3>
+                                        <p>Cuisine: {location.cuisineType.name}</p>
+                                        <Link to={`/${location.name}/products`}>Order</Link>                                        {/* <img src={location.image} alt={location.name}></img> */}
+                                    </div>
+                                </Popup>
+                            </Marker>
+                        ))}
+                    </MapContainer>
+
+                )}
             </div>
         </div>
     );

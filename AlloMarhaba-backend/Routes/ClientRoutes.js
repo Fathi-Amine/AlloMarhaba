@@ -5,6 +5,7 @@ const authMiddleware = require("../Middlewares/authMiddleware");
 const {getCLientOrders} = require('../Controllers/client/OrderController')
 
 // post request to create a new order
+
 router.post("/orders", authMiddleware, orderController.createOrder);
 router.get("/getClientOrders", authMiddleware,getCLientOrders );
 
