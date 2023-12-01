@@ -1,4 +1,5 @@
 const Menu = require('../../Models/Menu');
+const RestaurantModel = require('../../Models/Restaurant')
 
 const createMenuItem = async (req, res) => {
     const { name, image , price, restaurant } = req.body;
@@ -15,9 +16,24 @@ const createMenuItem = async (req, res) => {
 
 const getMenuItems = async (req, res) => {
     try {
+        const user_id = req.user.userId
+        
+        const getRestaurant = await RestaurantModel.findOne({
+            user: user_id,
+        }).select('_id');
+        const restaurantId = getRestaurant._id.toString(); //
+        console.log(getRestaurant);
+        if (restaurantId) {
+            
+            const menuItems = await Menu.find({restaurant_id : restaurantId }).populate('restaurant_id', 'name');;
+            console.log(menuItems);
+            return res.status(200).json({ menu: menuItems });
+        }else{
 
-        const menuItems = await Menu.find({});
-        return res.status(200).json({ menu: menuItems });
+            return res.json({ message: "pas de menu pour vous " });
+
+        } 
+        
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: error.message });

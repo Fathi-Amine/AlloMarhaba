@@ -22,10 +22,13 @@ import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 import VerificationPage from "./pages/VerificationPage.jsx";
 import UserListPage from "./pages/AllUsersPage.jsx";
 import DashboardNavbar from './pages/dash/dashboard.jsx';
+import DashboardOrderTable from "./components/dashComponents/DashOrderTable.jsx";
 import FillRestaurant from "./pages/manager/FillRestaurant.jsx";
 import Products from "./pages/client/Products.jsx";
 import Checkout from "./pages/client/Checkout.jsx";
 import Restaurant from "./components/Restaurants/index.jsx";
+import TrackOrder from "./pages/client/TrackOrder.jsx";
+import ClientOrders from "./pages/client/ClientOrders.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -48,6 +51,8 @@ const router = createBrowserRouter(
             ></Route>
             <Route path="" element={<PrivateRoute />}>
             <Route path="/dash" element={<DashboardNavbar />}></Route>
+            <Route path="/TrackOrder" element={<TrackOrder />}></Route>
+            <Route path="/ClientOrder" element={<ClientOrders />}></Route>
                 <Route path="/users" element={<UserListPage />}></Route>
                 <Route path="/profile" element={<ProfilePage />}></Route>
                 <Route
