@@ -17,13 +17,15 @@ const createMenuItem = async (req, res) => {
 const getMenuItems = async (req, res) => {
     try {
         const user_id = req.user.userId
+        console.log('this is id for the ', user_id);
         
         const getRestaurant = await RestaurantModel.findOne({
             user: user_id,
         }).select('_id');
-        const restaurantId = getRestaurant._id.toString(); //
-        console.log(getRestaurant);
-        if (restaurantId) {
+        console.log("restaurant_id" , getRestaurant) ;
+        if (getRestaurant) {
+            const restaurantId = getRestaurant._id.toString(); //
+            console.log(getRestaurant);
             
             const menuItems = await Menu.find({restaurant_id : restaurantId }).populate('restaurant_id', 'name');;
             console.log(menuItems);

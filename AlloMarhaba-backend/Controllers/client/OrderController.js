@@ -56,17 +56,12 @@ const getOrders = async (req , res)=>{
         const getRestaurant = await RestaurantModel.findOne({
             user: user_id,
         }).select('_id');
-        const restaurantId = getRestaurant._id.toString(); // Convert ObjectId to string
         if (getRestaurant) {
-
+            const restaurantId = getRestaurant._id.toString(); // Convert ObjectId to string
             console.log('for restau id',restaurantId);
         const orders = await OrderModel.find({
             restaurant_id : restaurantId
         }).populate('user_id', 'username')
-        .populate({
-            path: 'menus.menu_id',
-            model: 'Menu',
-          });
         
         if (orders) {
             res.status(201).json({
@@ -81,8 +76,8 @@ const getOrders = async (req , res)=>{
 
         }else{
 
-            res.status(204).json({
-                message : "pas de restaurant pour vous"
+            res.json({
+                error : "pas de Orders pour vous"
             })
         }
        
