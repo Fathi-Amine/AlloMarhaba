@@ -13,12 +13,13 @@ const MenuSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    restaurant_id: [
+    restaurant_id: 
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Restaurant',
         },
-    ],
+    
+    
 });
 
 module.exports = mongoose.model('Menu', MenuSchema);

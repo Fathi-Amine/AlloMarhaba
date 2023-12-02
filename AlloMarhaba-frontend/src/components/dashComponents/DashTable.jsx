@@ -25,6 +25,8 @@ export default function DashboardTable() {
       if (menuData && menuData.menu) {
         setMyData(menuData);
       }
+      console.log("ddddd");
+      console.log(menuData);
     }, [menuData]);
    
   // if (isLoading) {
@@ -208,7 +210,7 @@ const handleDelete=async(menuId)  =>{
                         <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {menu.name}
                         </td>
-                        <td className="px-6 py-4">{menu.restaurant_id.join(', ')}</td>
+                        <td className="px-6 py-4">{menu.restaurant_id.name}</td>
                         <td className="px-6 py-4">{menu.price}</td>
                         <td className="px-6 py-4 text-right">
                         <Button
