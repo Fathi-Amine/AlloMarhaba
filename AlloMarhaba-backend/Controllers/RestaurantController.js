@@ -36,7 +36,7 @@ async function createRestaurant(req, res) {
 }
 
 async function getRestaurantByUserId(req, res) {
-    console.log("cdcdccd");
+    // console.log("cdcdccd");
     let id = req.user.userId;
     // let id = "6555d5741c8149f78acd28c8";
     try {

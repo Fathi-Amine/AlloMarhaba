@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+
 const swaggerJsdoc = require("./Config/swagger");
 const swaggerUi = require("swagger-ui-express");
 const PORT = process.env.PORT || 5000;
@@ -8,12 +9,20 @@ const authRoutes = require("./Routes/AuthRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 const mailRoutes = require("./Routes/MailRoutes");
 const managaerRoutes = require("./Routes/ManagerRoutes");
+const clientRoutes = require("./Routes/ClientRoutes");
 const restaurantRoutes = require("./Routes/RestaurantRoutes");
 const connectToDatabase = require("./Database/connect");
 const helmet = require("helmet");
 const cors = require("cors");
 const rateLimiter = require("express-rate-limit");
 const errorHandlerMiddleware = require("./Middlewares/errorHandler");
+const http = require("http");
+const { initializeSocket } = require("./socket");
+const cookieParser = require("cookie-parser");
+
+const server = http.createServer(app);
+const io = initializeSocket(server);
+app.set("socketio", io);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc));
 
@@ -51,10 +60,5 @@ const start = async () => {
     }
 };
 
-
 start();
-
-
-
-
 module.exports = { io, server, app };

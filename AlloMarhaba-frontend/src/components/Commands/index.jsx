@@ -9,16 +9,19 @@ const Commands = () => {
             id: 1,
             name: 'pizza',
             isReady: false,
+            claimed: false
         },
         {
             id: 2,
             name: 'tacos',
             isReady: false,
+            claimed: false
         },
         {
             id: 3,
             name: 'lazania',
             isReady: false,
+            claimed: false
         }
         // Other commands...
       ]);
@@ -49,7 +52,7 @@ const Commands = () => {
 
     useEffect(() => {
         const socket = (io("http://localhost:5000"))
-        // console.log(socket)
+        console.log(socket)
         console.log(commands)
     }, [commands])
 

@@ -26,37 +26,10 @@ import FillRestaurant from "./pages/manager/FillRestaurant.jsx";
 import Products from "./pages/client/Products.jsx";
 import Checkout from "./pages/client/Checkout.jsx";
 import Restaurant from "./components/Restaurants/index.jsx";
-import Commands from "./components/Commands/index.jsx";
-import Notification from "./components/Nottification/index.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path="/" element={<App />}>
-            <Route index={true} path="/" element={<Home />}></Route>
-            <Route path="/login" element={<LoginPage />}></Route>
-            <Route path="/register" element={<RegisterPage />}></Route>
-            <Route
-                path="/mail/verify-email"
-                element={<VerificationPage />}
-            ></Route>
-            <Route path="/forgot" element={<ForgotPasswordPage />}></Route>
-            <Route
-                path="/user/reset-password/:token/:email"
-                element={<ResetPasswordPage />}
-            ></Route>
-            <Route
-                path="/restaurants"
-                element={<Restaurant />}
-            ></Route>
-            <Route
-                path="/commands"
-                element={<Commands />}
-            ></Route>
-            <Route
-                path="/notification"
-                element={<Notification />}
-            ></Route>
-            <Route path="" element={<PrivateRoute />}>
+        <Route>
             <Route path="/dash" element={<DashboardNavbar />}></Route>
             <Route path="/" element={<App />}>
                 <Route index={true} path="/" element={<Home />}></Route>
@@ -71,7 +44,6 @@ const router = createBrowserRouter(
                     path="/user/reset-password/:token/:email"
                     element={<ResetPasswordPage />}
                 ></Route>
-                <Route path="/restaurants" element={<Restaurant />}></Route>
                 <Route path="" element={<PrivateRoute />}>
                     {/* <Route path="/dash" element={<DashboardNavbar />}></Route> */}
                     <Route path="/users" element={<UserListPage />}></Route>
@@ -85,9 +57,9 @@ const router = createBrowserRouter(
                         element={<Products />}
                     ></Route>
                     <Route path="/checkout" element={<Checkout />}></Route>
+                    <Route path="/restaurants" element={<Restaurant />}></Route>
                 </Route>
             </Route>
-        </Route>
         </Route>
     )
 );

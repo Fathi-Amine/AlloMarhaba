@@ -34,7 +34,7 @@ router.post(
     RestaurantController.createRestaurant
 );
 
-router.post('/changeStatus' , authMiddleware, changeStatusOrders)
+
 
 
 module.exports = router;
