@@ -24,6 +24,7 @@ export default function DashboardOrderTable() {
     handlechangeOrderStatus(orderId,newStatus)
           
   };
+  console.log(showOrder);
 
   const handlechangeOrderStatus = async (orderId , Status)=>{
 
@@ -94,7 +95,7 @@ export default function DashboardOrderTable() {
                 </tr>
               </thead>
               <tbody>
-                {isSuccess &&
+                {isSuccess && showOrder.data &&
                   showOrder.data.map((order) => (
                     <tr
                       key={order._id}
@@ -104,12 +105,7 @@ export default function DashboardOrderTable() {
                         {order.user_id && order.user_id.username}
                       </td>
                       <td className="px-6 py-4">
-                        {order.menus.map((menu) => (
-                          <div key={menu._id}>
-                            {/* Render menu details */}
-                            {/* For example, menu.quantity, menu._id */}
-                          </div>
-                        ))}
+
                       </td>
                       <td className="px-6 py-4">
                         <select

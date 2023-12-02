@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { useParams } from "react-router-dom";
+
 import {
   Button,
   CircularProgress,
@@ -8,18 +10,55 @@ import {
 
 export default function TrackOrder() {
   const [orderStatus, setOrderStatus] = useState("");
-  const socket = io("http://localhost:5000");
+  const [socket, setSocket] = useState(null);
+  
+    const { orderId } = useParams();
+    
 
 
   useEffect(() => {
-    socket.on("orderStatusChanged", (updatedOrder) => {
-      // Handle the updated order status here
+    const newSocket = io("http://localhost:5000", {
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000,
+  });
+    console.log("Order ID:", orderId);
+    setSocket(newSocket);
+    newSocket.on("orderStatusChanged", (updatedOrder) => {
+      console.log("qq");
       console.log(updatedOrder);
-      setOrderStatus(updatedOrder.ordersData.status);
+
+      // Handle the updated order status here
+      if (updatedOrder.ordersData._id === orderId) {
+        // Update the orderStatus and apply corresponding styles
+        console.log(updatedOrder);
+        setOrderStatus(updatedOrder.ordersData.status);
+      }
     });
 
     return () => {
       socket.disconnect();
+    };
+  }, [orderId]);
+
+  useEffect(() => {
+    const handleReconnect = () => {
+      if (!socket.connected) {
+        socket.connect();
+      }
+    };
+
+    const handleDisconnect = () => {
+      if (socket.connected) {
+        socket.disconnect();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleDisconnect);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("beforeunload", handleDisconnect);
     };
   }, [socket]);
 

@@ -1,6 +1,10 @@
 import React from "react";
 import { useGetClientOrdersQuery } from "../../slices/menusApiSlice";
 import { CircularProgress } from "@mui/material";
+import TrackOrder from "./TrackOrder";
+import { Link } from "react-router-dom";
+
+
 
 export default function ClientOrders() {
   const {
@@ -18,11 +22,7 @@ export default function ClientOrders() {
   if (isError) {
     return <div>Error loading orders</div>;
   }
-  const handleTrackOrder = (orderId) => {
-    // Implement your tracking logic here
-    // For now, let's just log the order ID to the console
-    console.log(`Tracking Order ${orderId}`);
-  };
+
 
   return (
     <div>
@@ -75,13 +75,12 @@ export default function ClientOrders() {
             </div>
             <div className="flex items-center">
               {/* Add a button for tracking the order */}
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                onClick={() => handleTrackOrder(order._id)}
-              >
-                Track Order
-              </button>
-            </div>
+              <Link to={`/track-order/${order._id}`}>
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+                  Track Order
+                </button>
+              </Link>
+          </div>
           </div>
         </div>
       ))
