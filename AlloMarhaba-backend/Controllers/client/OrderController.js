@@ -101,7 +101,7 @@ const getCLientOrders = async(req , res)=>{
         const client_id = req.user.userId
         const clientOrder = await OrderModel.find({
             user_id : client_id
-        })
+        }).populate('restaurant_id','name')
 
         if (Object.keys(clientOrder).length > 0)  {
             res.json({
