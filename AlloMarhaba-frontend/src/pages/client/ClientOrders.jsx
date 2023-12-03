@@ -1,18 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useGetClientOrdersQuery } from "../../slices/menusApiSlice";
 import { CircularProgress } from "@mui/material";
 import TrackOrder from "./TrackOrder";
+import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from 'react-redux';
+import { setOrderStatus, setOrderId } from '../../slices/orderSlice';
 
 
 export default function ClientOrders() {
+  const dispatch = useDispatch();
   const {
     data: clientOrders,
     isLoading,
     isError,
     isSuccess,
   } = useGetClientOrdersQuery();
+ 
+  
+  // const [orderStatus, setOrderStatus] = useState("");
+    const socket = io("http://localhost:5000", {
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000, // 1 
+});
+
+
+useEffect(() => {
+  socket.on("orderStatusChanged", (updatedOrder) => {
+    console.log(updatedOrder);
+    dispatch(setOrderStatus(updatedOrder.ordersData.status));
+    dispatch(setOrderId(updatedOrder.ordersData._id));
+  });
+
+  return () => {
+    socket.off("orderStatusChanged");
+  };
+}, [dispatch]);
+
+    
+
+
+  
+
+
 
   console.log(clientOrders);
   if (isLoading) {
