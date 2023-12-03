@@ -126,7 +126,7 @@ const changeStatusOrders = async(req , res)=>{
         const {id , status} = req.body;
         console.log(status);
 
-        const orders = await OrderModel.findOneAndUpdate( {_id : id},{status})
+        const orders = await OrderModel.findOneAndUpdate( {_id : id},{status},{ new: true });
         const io = req.app.get("socketio"); 
         if (orders) {
             io.emit('orderStatusChanged', { ordersData : orders });
