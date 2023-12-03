@@ -61,6 +61,12 @@ export const menusApiSlice = apiSlice.injectEndpoints({
             method: 'GET',
         })
         }),
+        getRestaurants: builder.query({
+            query:()=>({
+            url: `${USERS_URL}/getRestaurant`,
+            method: 'GET',
+        })
+        }),
 
      
         
@@ -71,4 +77,4 @@ export const menusApiSlice = apiSlice.injectEndpoints({
 
 
 
-export const {useAddMenuMutation , useShowMenusQuery ,useShowOrdersQuery, useGetClientOrdersQuery,useUpdateOrderStatusMutation, useShowMenuMutation , useUpdateMenuMutation , useDeleteMenuMutation } = menusApiSlice
+export const {useAddMenuMutation , useShowMenusQuery,useGetRestaurantsQuery,useShowOrdersQuery, useGetClientOrdersQuery,useUpdateOrderStatusMutation, useShowMenuMutation , useUpdateMenuMutation , useDeleteMenuMutation } = menusApiSlice

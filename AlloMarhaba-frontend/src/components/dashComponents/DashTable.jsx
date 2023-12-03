@@ -21,12 +21,13 @@ export default function DashboardTable() {
     const [modeModal , setModeModal] = useState("")
     const[itemmenu , setItemMenu] = useState(null)
     const { data: menuData,refetch, error, isLoading, isError, isSuccess } = useShowMenusQuery()
+
     useEffect(() => {
       if (menuData && menuData.menu) {
         setMyData(menuData);
       }
-      console.log("ddddd");
       console.log(menuData);
+      console.log("ddddd");
     }, [menuData]);
    
   // if (isLoading) {
@@ -207,7 +208,7 @@ const handleDelete=async(menuId)  =>{
                             style={{ maxWidth: '50px', maxHeight: '50px' }}
                             />
                         </td>
-                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <td className="px-6 py-4 ">
                             {menu.name}
                         </td>
                         <td className="px-6 py-4">{menu.restaurant_id.name}</td>
