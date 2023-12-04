@@ -88,7 +88,7 @@ const searchByCuisineType = async (req, res) => {
         const cuisineTypeId = req.params.cuisineTypeId;
         // console.log(cuisineTypeId) ;
         const restaurants = await Restaurant.find({ cuisineType: cuisineTypeId });
-        console.log(restaurants);
+        // console.log(restaurants);
 
         if (restaurants.length === 0) {
             return res.status(404).json({ message: 'No restaurants found for this category.' });
@@ -96,7 +96,7 @@ const searchByCuisineType = async (req, res) => {
         
         res.status(200).json({ restaurants });
     } catch (error) {
-        console.error(error)
+        // console.error(error)
         res.status(500).json({ message: 'Error fetching restaurants by category.', error: error.message });
     }
 };
@@ -116,6 +116,7 @@ const displayRestaurants = async (req, res) => {
         res.status(500).json({ message: 'Error fetching restaurants.', error: error.message });
     }
 };
+
 const displayMyRestaurant = async (req , res)=>{
     try {
         const user_id = req.user.userId
