@@ -22,7 +22,9 @@ export default function ClientOrders() {
   } = useGetClientOrdersQuery();
  
   
+  const orderId = useSelector(selectOrderId);
   const orderStatus = useSelector(selectOrderStatus);
+
     const socket = io("http://localhost:5000", {
   reconnection: true,
   reconnectionAttempts: 5,
@@ -103,7 +105,7 @@ useEffect(() => {
                 <h1 className="text-lg md:text-xl font-semibold leading-6 text-gray-800">
                   Order Details
                 </h1>
-                <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">Status: {  orderStatus ? (orderStatus) :(order.status)}</p>
+                <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">Status: { order._id === orderId ? (orderStatus) :(order.status)}</p>
                 <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">Total Price: ${order.total_price}</p>
                 {/* Display other order details like items, prices, etc. */}
               </div>
