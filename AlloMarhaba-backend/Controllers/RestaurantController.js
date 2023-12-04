@@ -116,6 +116,33 @@ const displayRestaurants = async (req, res) => {
         res.status(500).json({ message: 'Error fetching restaurants.', error: error.message });
     }
 };
+const displayMyRestaurant = async (req , res)=>{
+    try {
+        const user_id = req.user.userId
+        console.log("nari");
+        console.log(user_id);
+        const getRestaurant = await Restaurant.findOne({
+            user: user_id,
+        })
+                if (getRestaurant) {
+            res.status(201).json({
+                message : 'voila votre restaurant',
+                data : getRestaurant
+            })}
+            else {
+                res.json({
+                    message : 'pas de restaurant',
+
+                })
+        }
+       
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    }
+
 
 module.exports = {
     createRestaurant,
@@ -123,5 +150,6 @@ module.exports = {
     searchRestaurantByName,
     searchByCuisineType,
     displayRestaurants,
-    searchByPlace
+    searchByPlace,
+    displayMyRestaurant
 };

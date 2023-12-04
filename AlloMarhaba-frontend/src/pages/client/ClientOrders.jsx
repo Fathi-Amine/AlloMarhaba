@@ -1,14 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useGetClientOrdersQuery } from "../../slices/menusApiSlice";
 import { CircularProgress } from "@mui/material";
+import TrackOrder from "./TrackOrder";
+import { io } from "socket.io-client";
+import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setOrderStatus, setOrderId } from '../../slices/orderSlice';
+import { selectOrderStatus, selectOrderId } from '../../slices/orderSlice';
+
+import { useSelector } from 'react-redux';
+
+
 
 export default function ClientOrders() {
+  const dispatch = useDispatch();
   const {
     data: clientOrders,
     isLoading,
     isError,
     isSuccess,
   } = useGetClientOrdersQuery();
+ 
+  
+  const orderId = useSelector(selectOrderId);
+  const orderStatus = useSelector(selectOrderStatus);
+
+    const socket = io("http://localhost:5000", {
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000, // 1 
+});
+
+
+useEffect(() => {
+  socket.on("orderStatusChanged", (updatedOrder) => {
+    console.log(updatedOrder);
+    dispatch(setOrderStatus(updatedOrder.ordersData.status));
+    dispatch(setOrderId(updatedOrder.ordersData._id));
+  });
+
+  return () => {
+    socket.off("orderStatusChanged");
+  };
+}, [dispatch]);
+
+    
+
+
+  
+
+
 
   console.log(clientOrders);
   if (isLoading) {
@@ -18,11 +59,7 @@ export default function ClientOrders() {
   if (isError) {
     return <div>Error loading orders</div>;
   }
-  const handleTrackOrder = (orderId) => {
-    // Implement your tracking logic here
-    // For now, let's just log the order ID to the console
-    console.log(`Tracking Order ${orderId}`);
-  };
+
 
   return (
     <div>
@@ -68,20 +105,19 @@ export default function ClientOrders() {
                 <h1 className="text-lg md:text-xl font-semibold leading-6 text-gray-800">
                   Order Details
                 </h1>
-                <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">Status: {order.status}</p>
+                <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">Status: { order._id === orderId ? (orderStatus) :(order.status)}</p>
                 <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">Total Price: ${order.total_price}</p>
                 {/* Display other order details like items, prices, etc. */}
               </div>
             </div>
             <div className="flex items-center">
               {/* Add a button for tracking the order */}
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                onClick={() => handleTrackOrder(order._id)}
-              >
-                Track Order
-              </button>
-            </div>
+              <Link to={`/track-order/${order._id}`}>
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+                  Track Order
+                </button>
+              </Link>
+          </div>
           </div>
         </div>
       ))

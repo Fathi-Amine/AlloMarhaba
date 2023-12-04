@@ -14,6 +14,7 @@ const validationMenu = require("../Utils/validationMenu");
 // const{ createMenuItem} = require('../Controllers/MenuController');
 const RestaurantController = require("../Controllers/RestaurantController");
 const authMiddleware = require("../Middlewares/authMiddleware");
+const {displayMyRestaurant} = require("../Controllers/RestaurantController");
 const {getOrders , changeStatusOrders } = require('../Controllers/client/OrderController')
 
     
@@ -36,6 +37,12 @@ router.get(
     "/checkRestaurant",
     authMiddleware,
     RestaurantController.getRestaurantByUserId
+);
+router.get(
+    "/getRestaurant",
+    authMiddleware,
+    displayMyRestaurant
+    
 );
 router.post(
     "/restaurant/add",

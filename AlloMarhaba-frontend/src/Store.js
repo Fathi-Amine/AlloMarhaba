@@ -4,6 +4,8 @@ import authReducer from "./slices/authSlice.js";
 import { apiSlice } from "./slices/apiSlice.js";
 import mapSlice from "./slices/mapSlice.js";
 import cartSlice from "./slices/cartSlice.js";
+import orderReducer from "./slices/orderSlice.js";
+
 
 const store = configureStore({
     reducer: {
@@ -14,6 +16,8 @@ const store = configureStore({
         [apiSlice.reducerPath]: apiSlice.reducer,
         map: mapSlice,
         cart: cartSlice,
+        order: orderReducer,
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(apiSlice.middleware),

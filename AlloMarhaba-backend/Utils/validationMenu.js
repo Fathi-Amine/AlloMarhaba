@@ -5,7 +5,7 @@ const menuSchema = Joi.object({
   name: Joi.string().required(),
   image : Joi.required(),
   price: Joi.number().required(),
-  restaurant: Joi.string().required(),
+  restaurant_id: Joi.string().required(),
   // Add more validation rules for other fields as needed
 });
 

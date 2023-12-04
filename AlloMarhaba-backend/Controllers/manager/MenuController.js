@@ -2,12 +2,11 @@ const Menu = require('../../Models/Menu');
 const RestaurantModel = require('../../Models/Restaurant')
 
 const createMenuItem = async (req, res) => {
-    const { name, image , price, restaurant } = req.body;
-    console.log(req.body);
+    const { name, image , price, restaurant_id } = req.body;
 
     try {
 
-        const newItem = await Menu.create({ name, image , price, restaurant});
+        const newItem = await Menu.create({ name, image , price, restaurant_id});
         return res.status(201).json({ message: 'Item added successfully', newItem });
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -16,14 +15,13 @@ const createMenuItem = async (req, res) => {
 
 const getMenuItems = async (req, res) => {
     try {
-        const user_id = req.user.userId
-        
+        const user_id = req.user.userId        
         const getRestaurant = await RestaurantModel.findOne({
             user: user_id,
         }).select('_id');
-        const restaurantId = getRestaurant._id.toString(); //
-        console.log(getRestaurant);
-        if (restaurantId) {
+        if (getRestaurant) {
+            const restaurantId = getRestaurant._id.toString(); //
+            console.log(getRestaurant);
             
             const menuItems = await Menu.find({restaurant_id : restaurantId }).populate('restaurant_id', 'name');;
             console.log(menuItems);
@@ -52,11 +50,11 @@ const getMenuItem = async (req, res) => {
 };
 
 const updateMenuItem = async (req, res) => {
-    const { id ,name,image, price, restaurant } = req.body;
+    const { id ,name,image, price, restaurant_id } = req.body;
     console.log('c"est le nom  ',id);
 
     try {
-        const existingItem = await Menu.findOneAndUpdate({ _id: id }, { name, price,image, restaurant }, { new: true });
+        const existingItem = await Menu.findOneAndUpdate({ _id: id }, { name, price,image, restaurant_id }, { new: true });
 
         if (!existingItem) {
             return res.status(404).json({ message: 'Menu item not found' });
