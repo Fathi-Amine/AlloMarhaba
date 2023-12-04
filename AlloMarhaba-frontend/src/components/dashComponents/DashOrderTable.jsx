@@ -38,15 +38,15 @@ export default function DashboardOrderTable() {
       console.log(updateResult.data.message);
       if (updateResult.data.message) {
         toast.success(updateResult.data.message, {
-          position: toast.POSITION.TOP_RIGHT, // Position en haut à droite
+          position: toast.POSITION.TOP_RIGHT, 
           style: {
             marginTop: "4rem",
-            background: "#007bff", // Couleur de fond bleue
-            color: "#fff", // Couleur du texte blanc
-            borderRadius: "10px", // Coins arrondis
-            padding: "15px 25px", // Espacement interne
-            fontSize: "18px", // Taille du texte
-            textAlign: "center", // Centrer le texte horizontalement
+            background: "#007bff", 
+            color: "#fff", 
+            borderRadius: "10px", 
+            padding: "15px 25px", 
+            fontSize: "18px", 
+            textAlign: "center", 
           },
         });
       }
@@ -62,8 +62,8 @@ export default function DashboardOrderTable() {
   }
 
   useEffect(() => {
-    // If you want to perform any side effects when selectedStatus changes,
-    // you can do it here
+    
+    
   }, [selectedStatus]);
 
   return (
