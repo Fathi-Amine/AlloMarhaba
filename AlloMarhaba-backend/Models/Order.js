@@ -62,6 +62,9 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    livreur: {
+        type: String,
+      },
 });
 
 
