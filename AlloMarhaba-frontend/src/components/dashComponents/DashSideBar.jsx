@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 export default function DashboardSideBar({ onComponentChange }) {
    const handleDashboardClick = () => {
       onComponentChange("menutable");
@@ -13,7 +12,6 @@ export default function DashboardSideBar({ onComponentChange }) {
     return (
         
 <div>
-
 
 
 

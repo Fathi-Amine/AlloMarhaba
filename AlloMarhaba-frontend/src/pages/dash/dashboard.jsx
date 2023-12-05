@@ -6,6 +6,7 @@ import DashboardSideBar from "../../components/dashComponents/DashSideBar";
 import DashboardTable from "../../components/dashComponents/DashTable";
 import DashboardOrderTable from "../../components/dashComponents/DashOrderTable"; // Import the component for orders
 import 'flowbite';
+import DashNavBar from "../../components/dashComponents/DashNavBar";
 // import "./DashboardNavbar.css";
 
 export default function DashboardNavbar() {
@@ -18,6 +19,7 @@ export default function DashboardNavbar() {
     return (
         <div className="dashboard-container">
             <div className="dashboard-sidebar">
+            <DashNavBar/>   
                 <DashboardSideBar onComponentChange={handleComponentChange} />
             </div>
             <div className="dashboard-content">

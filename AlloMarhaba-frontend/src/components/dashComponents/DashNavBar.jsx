@@ -2,7 +2,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import axios from "axios";
-export default function DashboardNavBar() {
+export default function DashNavBar() {
     const [newOrderCount, setNewOrderCount] = useState(0);
     const [currentRestaurantID, setCurrentRestaurantID] = useState(null);
 

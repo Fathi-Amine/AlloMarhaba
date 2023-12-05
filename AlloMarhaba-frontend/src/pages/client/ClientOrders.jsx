@@ -4,13 +4,11 @@ import { CircularProgress } from "@mui/material";
 import TrackOrder from "./TrackOrder";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { setOrderStatus, setOrderId } from '../../slices/orderSlice';
-import { selectOrderStatus, selectOrderId } from '../../slices/orderSlice';
+import { useDispatch } from "react-redux";
+import { setOrderStatus, setOrderId } from "../../slices/orderSlice";
+import { selectOrderStatus, selectOrderId } from "../../slices/orderSlice";
 
-import { useSelector } from 'react-redux';
-
-
+import { useSelector } from "react-redux";
 
 export default function ClientOrders() {
   const dispatch = useDispatch();
@@ -20,46 +18,36 @@ export default function ClientOrders() {
     isError,
     isSuccess,
   } = useGetClientOrdersQuery();
- 
-  
+
   const orderId = useSelector(selectOrderId);
   const orderStatus = useSelector(selectOrderStatus);
 
-    const socket = io("http://localhost:5000", {
-  reconnection: true,
-  reconnectionAttempts: 5,
-  reconnectionDelay: 1000, // 1 
-});
-
-
-useEffect(() => {
-  socket.on("orderStatusChanged", (updatedOrder) => {
-    console.log(updatedOrder);
-    dispatch(setOrderStatus(updatedOrder.ordersData.status));
-    dispatch(setOrderId(updatedOrder.ordersData._id));
+  const socket = io("http://localhost:5000", {
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000, // 1
   });
 
-  return () => {
-    socket.off("orderStatusChanged");
-  };
-}, [dispatch]);
+  useEffect(() => {
+    socket.on("orderStatusChanged", (updatedOrder) => {
+      console.log(updatedOrder);
+      dispatch(setOrderStatus(updatedOrder.ordersData.status));
+      dispatch(setOrderId(updatedOrder.ordersData._id));
+    });
 
-    
-
-
-  
-
-
+    return () => {
+      socket.off("orderStatusChanged");
+    };
+  }, [dispatch]);
 
   console.log(clientOrders);
-  if (isLoading) {
-    return <CircularProgress />;
-  }
+  // if (isLoading) {
+  //   return <CircularProgress />;
+  // }
 
-  if (isError) {
-    return <div>Error loading orders</div>;
-  }
-
+  // if (isError) {
+  //   return <div>Error loading orders</div>;
+  // }
 
   return (
     <div>
@@ -68,56 +56,88 @@ useEffect(() => {
           <h1 className="text-3xl dark:text--gray-900 lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
             Your Order{" "}
           </h1>
-          <p className="text-base dark:text-gray-900 font-medium leading-6 text-gray-600">
+          {/* <p className="text-base dark:text-gray-900 font-medium leading-6 text-gray-600">
             date : frida
-          </p>
+          </p> */}
         </div>
         <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
         <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-  <div className="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
+  <div className=" dark:bg-gray-800 shadow-md rounded-md p-6 md:p-8 xl:p-10 w-full">
     <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">
       Customer’s Orders
     </p>
     {isSuccess && clientOrders ? (
       clientOrders.data.map((order) => (
         <div
-          key={order._id} // Use a unique key, like _id
-          className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full"
+          key={order._id}
+          className="mt-4 md:mt-6 bg-white dark:bg-gray-700 rounded-md overflow-hidden shadow-md w-full"
         >
-          <div className="pb-4 md:pb-8 w-full md:w-40">
-            <img
-              className="w-full hidden md:block"
-              src="https://cdn5.vectorstock.com/i/1000x1000/88/84/complete-order-icon-in-filled-line-style-for-any-vector-35318884.jpg"
-              alt="order icon"
-            />
-            <img
-              className="w-full md:hidden"
-              src="https://i.ibb.co/L039qbN/Rectangle-10.png"
-              alt="order icon"
-            />
-          </div>
-          <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
-            <div className="w-full flex flex-col justify-start items-start space-y-4">
-              <h3 className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">
-                Order #
-              </h3>
-              <div>
-                <h1 className="text-lg md:text-xl font-semibold leading-6 text-gray-800">
-                  Order Details
-                </h1>
-                <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">Status: { order._id === orderId ? (orderStatus) :(order.status)}</p>
-                <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">Total Price: ${order.total_price}</p>
-                {/* Display other order details like items, prices, etc. */}
+          <div className="md:flex p-4 md:p-6 xl:p-8 space-y-4 md:space-y-0">
+            <div className="md:w-40">
+            <h1 className="text-lg md:text-xl font-semibold leading-6 text-gray-800">
+                    Order Details : 
+                  </h1>
+              <img
+                className="w-full hidden md:block"
+                src="https://cdn5.vectorstock.com/i/1000x1000/88/84/complete-order-icon-in-filled-line-style-for-any-vector-35318884.jpg"
+                alt="order icon"
+              />
+              <img
+                className="w-full md:hidden"
+                src="https://i.ibb.co/L039qbN/Rectangle-10.png"
+                alt="order icon"
+              />
+            </div>
+            <div className="flex-1 border-b border-gray-200 md:flex-row flex-col flex justify-between items-start pb-8 space-y-4 md:space-y-0">
+              <div className="w-full md:w-1/2 flex flex-col justify-start items-start space-y-4">
+                <h3 className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">
+                  Order #
+                </h3>
+                <div>
+                 
+                  {order.menus.length > 0 &&
+                    order.menus.map((menuItem, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col justify-start items-start space-y-2"
+                      >
+                        {menuItem._id ? (
+                          <>
+                            <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                              Menu Name: {menuItem._id.name}
+                            </p>
+                            <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                              Quantity: {menuItem.quantity}
+                            </p>
+                            {/* Display other menu details like image, price, etc. */}
+                          </>
+                        ) : (
+                          <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                            Menu information not available
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 flex items-center">
+                <div className="flex flex-col justify-start items-start space-y-4">
+                  <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                    Status:{" "}
+                    {order._id === orderId ? orderStatus : order.status}
+                  </p>
+                  <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                    Total Price: ${order.total_price}
+                  </p>
+                  {/* Display other order details like items, prices, etc. */}
+                  <Link to={`/track-order/${order._id}`}>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+                      Track Order
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
-            <div className="flex items-center">
-              {/* Add a button for tracking the order */}
-              <Link to={`/track-order/${order._id}`}>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-                  Track Order
-                </button>
-              </Link>
-          </div>
           </div>
         </div>
       ))
@@ -131,7 +151,6 @@ useEffect(() => {
   </div>
 </div>
 
-       
 
 
           <div class="bg-gray-50 dark:bg-gray-800 w-full xl:w-96 flex justify-between items-center md:items-start px-4 py-6 md:p-6 xl:p-8 flex-col">
