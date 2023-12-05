@@ -62,94 +62,93 @@ export default function ClientOrders() {
         </div>
         <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
         <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-  <div className=" dark:bg-gray-800 shadow-md rounded-md p-6 md:p-8 xl:p-10 w-full">
-    <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">
-      Customer’s Orders
-    </p>
-    {isSuccess && clientOrders ? (
-      clientOrders.data.map((order) => (
-        <div
-          key={order._id}
-          className="mt-4 md:mt-6 bg-white dark:bg-gray-700 rounded-md overflow-hidden shadow-md w-full"
-        >
-          <div className="md:flex p-4 md:p-6 xl:p-8 space-y-4 md:space-y-0">
-            <div className="md:w-40">
-            <h1 className="text-lg md:text-xl font-semibold leading-6 text-gray-800">
-                    Order Details : 
-                  </h1>
-              <img
-                className="w-full hidden md:block"
-                src="https://cdn5.vectorstock.com/i/1000x1000/88/84/complete-order-icon-in-filled-line-style-for-any-vector-35318884.jpg"
-                alt="order icon"
-              />
-              <img
-                className="w-full md:hidden"
-                src="https://i.ibb.co/L039qbN/Rectangle-10.png"
-                alt="order icon"
-              />
-            </div>
-            <div className="flex-1 border-b border-gray-200 md:flex-row flex-col flex justify-between items-start pb-8 space-y-4 md:space-y-0">
-              <div className="w-full md:w-1/2 flex flex-col justify-start items-start space-y-4">
-                <h3 className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">
-                  Order #
-                </h3>
-                <div>
-                 
-                  {order.menus.length > 0 &&
-                    order.menus.map((menuItem, index) => (
-                      <div
-                        key={index}
-                        className="flex flex-col justify-start items-start space-y-2"
-                      >
-                        {menuItem._id ? (
-                          <>
-                            <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
-                              Menu Name: {menuItem._id.name}
-                            </p>
-                            <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
-                              Quantity: {menuItem.quantity}
-                            </p>
-                            {/* Display other menu details like image, price, etc. */}
-                          </>
-                        ) : (
-                          <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
-                            Menu information not available
-                          </p>
-                        )}
+        <div className="bg-white dark:bg-gray-800 shadow-md rounded-md p-6 md:p-8 xl:p-10 w-full">
+          <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">
+            Customer’s Orders
+          </p>
+          {isSuccess && clientOrders ? (
+            clientOrders.data.map((order) => (
+              <div
+                key={order._id}
+                className="mt-4 md:mt-6 bg-gray-100 rounded-md overflow-hidden shadow-md w-full"
+              >
+                <div className="md:flex p-4 md:p-6 xl:p-8 space-y-4 md:space-y-0">
+                  <div className="md:w-40">
+                    <h1 className="text-lg md:text-xl font-semibold leading-6 text-gray-800">
+                      Order Details :
+                    </h1>
+                    <img
+                      className="w-full hidden md:block"
+                      src="https://cdn5.vectorstock.com/i/1000x1000/88/84/complete-order-icon-in-filled-line-style-for-any-vector-35318884.jpg"
+                      alt="order icon"
+                    />
+                    <img
+                      className="w-full md:hidden"
+                      src="https://i.ibb.co/L039qbN/Rectangle-10.png"
+                      alt="order icon"
+                    />
+                  </div>
+                  <div className="flex-1 border-b border-gray-200 md:flex-row flex-col flex justify-between items-start pb-8 space-y-4 md:space-y-0">
+                    <div className="w-full md:w-1/2 flex flex-col justify-start items-start space-y-4">
+                      <h3 className=" ms-5 text-xl xl:text-2xl font-semibold leading-6 text-gray-800">
+                        Order #
+                      </h3>
+                      <div className="ms-5">
+                        {order.menus.length > 0 &&
+                          order.menus.map((menuItem, index) => (
+                            <div
+                              key={index}
+                              className="flex flex-col justify-start items-start space-y-2"
+                            >
+                              {menuItem._id ? (
+                                <>
+                                  <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                                    Menu Name: {menuItem._id.name}
+                                  </p>
+                                  <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                                    Quantity: {menuItem.quantity}
+                                  </p>
+                                  {/* Display other menu details like image, price, etc. */}
+                                </>
+                              ) : (
+                                <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                                  Menu information not available
+                                </p>
+                              )}
+                            </div>
+                          ))}
                       </div>
-                    ))}
+                    </div>
+                    <div className="w-full md:w-1/2  flex items-center">
+                      <div className="flex flex-col mt-5 justify-start items-start space-y-4">
+                        <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                          Status:{" "}
+                          {order._id === orderId ? orderStatus : order.status}
+                        </p>
+                        <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
+                          Total Price: ${order.total_price}
+                        </p>
+                        {/* Display other order details like items, prices, etc. */}
+                        <Link to={`/track-order/${order._id}`}>
+                          <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+                            Track Order
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="w-full md:w-1/2 flex items-center">
-                <div className="flex flex-col justify-start items-start space-y-4">
-                  <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
-                    Status:{" "}
-                    {order._id === orderId ? orderStatus : order.status}
-                  </p>
-                  <p className="text-xl  xl:text-2xl font-semibold leading-6 text-gray-800">
-                    Total Price: ${order.total_price}
-                  </p>
-                  {/* Display other order details like items, prices, etc. */}
-                  <Link to={`/track-order/${order._id}`}>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-                      Track Order
-                    </button>
-                  </Link>
-                </div>
-              </div>
+            ))
+          ) : (
+            <div>
+              <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">
+                {clientOrders && clientOrders.message}
+              </p>
             </div>
-          </div>
+          )}
         </div>
-      ))
-    ) : (
-      <div>
-        <p className="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">
-          {clientOrders && clientOrders.message}
-        </p>
       </div>
-    )}
-  </div>
-</div>
 
 
 

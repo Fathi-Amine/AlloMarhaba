@@ -137,6 +137,8 @@ const changeStatusOrders = async (req, res) => {
       const restaurant = await RestaurantModel.findById(orders.restaurant_id); // Fetch restaurant details based on the order
       const io = req.app.get("socketio");
       if (orders) {
+        io.emit('orderStatusChanged', { ordersData : orders });
+
           if (status === 'prepared') {
           io.emit('orderStatusChangedToPrepared', { orderId: id, restaurant });
         }
