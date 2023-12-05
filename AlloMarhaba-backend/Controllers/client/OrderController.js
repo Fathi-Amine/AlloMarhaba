@@ -120,42 +120,66 @@ const getCLientOrders = async(req , res)=>{
 
 
 }
-const changeStatusOrders = async(req , res)=>{
-
+const changeStatusOrders = async (req, res) => {
     try {
-        const {id , status} = req.body;
-        console.log(status);
-
-        const orders = await OrderModel.findOneAndUpdate( {_id : id},{status},{ new: true });
-        const io = req.app.get("socketio"); 
-        if (orders) {
-            io.emit('orderStatusChanged', { ordersData : orders });
-            
-            res.status(200).json({
-                message : "status updated succusefly"
-            }) 
-        
+      const { id, status } = req.body;
+  
+      const orders = await OrderModel.findOneAndUpdate(
+        { _id: id },
+        { status },
+        { new: true }
+      );
+  
+      const restaurant = await RestaurantModel.findById(orders.restaurant_id); // Fetch restaurant details based on the order
+      const io = req.app.get("socketio");
+      if (orders) {
+          if (status === 'prepared') {
+          io.emit('orderStatusChangedToPrepared', { orderId: id, restaurant });
         }
-        else{
-            res.status(200).json({
-            message : "status is not changed"
-            })
-        }
-            
-        
+  
+        res.status(200).json({
+          message: "status updated successfully"
+        });
+      } else {
+        res.status(200).json({
+          message: "status is not changed"
+        });
+      }
     } catch (error) {
-        console.log(error.message);
-        
+      console.error(error.message);
+      res.status(500).json({ message: 'Error updating status.', error: error.message });
     }
+  };
 
+  const assignOrderToLivreur = async (req, res) => {
+    try {
+      const { orderId, user } = req.body;
+  
+      // Update the order document in the MongoDB collection
+      const updatedOrder = await OrderModel.findOneAndUpdate(
+        { _id: orderId },
+        { $set: { livreur: user } },
+        { new: true }
+      );
+  
+      if (updatedOrder) {
+        console.log(`Order ${orderId} updated with livreur: ${user}`);
+        res.status(200).json({ message: 'Order assigned to delivery person.', updatedOrder });
+      } else {
+        console.log(`Order ${orderId} not found`);
+        res.status(404).json({ message: 'Order not found.' });
+      }
+    } catch (error) {
+      console.error('Error assigning order:', error);
+      res.status(500).json({ message: 'Error assigning order.', error: error.message });
+    }
+  };
 
-
-
-}
 
 module.exports = {
     createOrder,
     getOrders,
     changeStatusOrders,
-    getCLientOrders
+    getCLientOrders,
+    assignOrderToLivreur
 };
