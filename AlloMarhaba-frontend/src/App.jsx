@@ -8,7 +8,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme } from '@mui/material/styles';
 
-// Créez votre thème personnalisé
 const theme = createTheme();
 
 const App = () => {

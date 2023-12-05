@@ -14,13 +14,23 @@ const validationMenu = require("../Utils/validationMenu");
 // const{ createMenuItem} = require('../Controllers/MenuController');
 const RestaurantController = require("../Controllers/RestaurantController");
 const authMiddleware = require("../Middlewares/authMiddleware");
+const {displayMyRestaurant} = require("../Controllers/RestaurantController");
+const {getOrders , changeStatusOrders } = require('../Controllers/client/OrderController')
 
-router.post("/addMenu", validationMenu, createMenuItem);
-router.get("/showMenus", getMenuItems);
-router.post("/showMenu", getMenuItem);
+    
 
-router.post("/updateMenu", updateMenuItem);
-router.post("/deleteMenu", deleteMenuItem);
+router.post('/addMenu', validationMenu,createMenuItem)
+router.get('/showMenus',authMiddleware,getMenuItems)
+router.post('/showMenu',getMenuItem)
+
+router.post('/updateMenu',updateMenuItem)
+router.post('/deleteMenu',deleteMenuItem)
+
+
+
+router.get('/getOreders' , authMiddleware, getOrders)
+router.post('/changeStatus' , authMiddleware, changeStatusOrders)
+
 
 // router.post("/add", RestaurantController.createRestaurant);
 router.get(
@@ -28,10 +38,19 @@ router.get(
     authMiddleware,
     RestaurantController.getRestaurantByUserId
 );
+router.get(
+    "/getRestaurant",
+    authMiddleware,
+    displayMyRestaurant
+    
+);
 router.post(
     "/restaurant/add",
     authMiddleware,
     RestaurantController.createRestaurant
 );
+
+
+
 
 module.exports = router;

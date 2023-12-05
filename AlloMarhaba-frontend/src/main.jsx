@@ -52,7 +52,6 @@ const router = createBrowserRouter(
                     path="/user/reset-password/:token/:email"
                     element={<ResetPasswordPage />}
                 ></Route>
-                <Route path="/restaurants" element={<Restaurant />}></Route>
                 <Route path="" element={<PrivateRoute />}>
                     {/* <Route path="/dash" element={<DashboardNavbar />}></Route> */}
                     <Route path="/users" element={<UserListPage />}></Route>
@@ -66,6 +65,7 @@ const router = createBrowserRouter(
                         element={<Products />}
                     ></Route>
                     <Route path="/checkout" element={<Checkout />}></Route>
+                    <Route path="/restaurants" element={<Restaurant />}></Route>
                 </Route>
             </Route>
         </Route>
@@ -75,6 +75,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
         {/* <React.StrictMode> */}
         <RouterProvider router={router} />
-        {/* </React.StrictMode>, */},
+        {/* </React.StrictMode>, */}
     </Provider>
 );

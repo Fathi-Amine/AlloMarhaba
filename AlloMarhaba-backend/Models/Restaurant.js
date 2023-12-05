@@ -46,8 +46,6 @@ const RestaurantSchema = new mongoose.Schema({
         // type: mongoose.Schema.Types.ObjectId,
         type: String,
         required: [true, "Please Provide a cuisine Type"],
-        minLength: 3,
-        maxLength: 50,
         ref: "CuisineType",
     },
     latitude: {

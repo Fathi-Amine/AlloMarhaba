@@ -1,6 +1,7 @@
 const validateRestaurant = require("../validator/restaurantValidator");
 const Restaurant = require("../Models/Restaurant");
 const CuisineType = require("../Models/CuisineType");
+const User = require("../Models/Users");
 
 async function createRestaurant(req, res) {
     const { error } = validateRestaurant.validateCreateRestaurant(req.body);
@@ -42,7 +43,7 @@ async function createRestaurant(req, res) {
 }
 
 async function getRestaurantByUserId(req, res) {
-    console.log("cdcdccd");
+    // console.log("cdcdccd");
     let id = req.user.userId;
     // let id = "6555d5741c8149f78acd28c8";
     try {
@@ -96,7 +97,7 @@ const searchByCuisineType = async (req, res) => {
         const restaurants = await Restaurant.find({
             cuisineType: cuisineTypeId,
         });
-        console.log(restaurants);
+        // console.log(restaurants);
 
         if (restaurants.length === 0) {
             return res
@@ -106,7 +107,7 @@ const searchByCuisineType = async (req, res) => {
 
         res.status(200).json({ restaurants });
     } catch (error) {
-        console.error(error);
+        // console.error(error)
         res.status(500).json({
             message: "Error fetching restaurants by category.",
             error: error.message,
@@ -114,7 +115,16 @@ const searchByCuisineType = async (req, res) => {
     }
 };
 
-const displayRestarants = async (req, res) => {
+const searchByPlace = async (req, res) => {
+    const city = req.params.place;
+    const restaurants = await Restaurant.find({ city: city })
+        .select("name latitude longitude image cuisineType")
+        .populate("cuisineType");
+    console.log(restaurants);
+    res.json({ restaurants });
+};
+
+const displayRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
         res.json({ restaurants });
@@ -126,10 +136,35 @@ const displayRestarants = async (req, res) => {
     }
 };
 
+const displayMyRestaurant = async (req, res) => {
+    try {
+        const user_id = req.user.userId;
+        console.log("nari");
+        console.log(user_id);
+        const getRestaurant = await Restaurant.findOne({
+            user: user_id,
+        });
+        if (getRestaurant) {
+            res.status(201).json({
+                message: "voila votre restaurant",
+                data: getRestaurant,
+            });
+        } else {
+            res.json({
+                message: "pas de restaurant",
+            });
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
 module.exports = {
     createRestaurant,
     getRestaurantByUserId,
     searchRestaurantByName,
     searchByCuisineType,
-    displayRestarants,
+    displayRestaurants,
+    searchByPlace,
+    displayMyRestaurant,
 };
