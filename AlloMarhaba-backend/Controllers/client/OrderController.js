@@ -1,5 +1,6 @@
 const RestaurantModel = require("../../Models/Restaurant");
 const OrderModel = require("../../Models/Order");
+const Notification = require("../../Models/Notification");
 
 
 async function createOrder(req, res) {
@@ -153,26 +154,18 @@ const changeStatusOrders = async (req, res) => {
 
   const assignOrderToLivreur = async (req, res) => {
     try {
-      const { orderId, user } = req.body;
-  
-      // Update the order document in the MongoDB collection
-      const updatedOrder = await OrderModel.findOneAndUpdate(
-        { _id: orderId },
-        { $set: { livreur: user } },
-        { new: true }
-      );
-  
-      if (updatedOrder) {
-        console.log(`Order ${orderId} updated with livreur: ${user}`);
-        res.status(200).json({ message: 'Order assigned to delivery person.', updatedOrder });
-      } else {
-        console.log(`Order ${orderId} not found`);
-        res.status(404).json({ message: 'Order not found.' });
+        const { notificationText } = req.body;
+    
+        const newNotification = new Notification({ text: notificationText });
+        await newNotification.save();
+        const io = req.app.get("socketio");
+        
+        io.emit('orderAssigned', { claimedOrder: true });
+        res.status(200).json({ message: 'Notification created successfully.' });
+      } catch (error) {
+        console.error('Error creating notification:', error);
+        res.status(500).json({ message: 'Error creating notification.', error: error.message });
       }
-    } catch (error) {
-      console.error('Error assigning order:', error);
-      res.status(500).json({ message: 'Error assigning order.', error: error.message });
-    }
   };
 
 
