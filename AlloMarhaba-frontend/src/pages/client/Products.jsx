@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../../components/Card";
+import axios from "axios";
 
 function Products() {
     const [products, setProducts] = useState([]);
@@ -13,18 +14,23 @@ function Products() {
         localStorage.setItem("restaurantName", restaurantName);
         console.log("restaurantName", restaurantName);
         // get products from products.json
-        fetch("/products.json")
-            .then((response) => response.json())
-            .then((data) => setProducts(data))
-            .catch((error) => console.error(error));
+        async function getProducts() {
+            const { data } = await axios.get(
+                `http://localhost:5000/api/client/products/${restaurantName}`
+            );
+            console.log("data", data);
+            setProducts(data.menu);
+        }
+        getProducts();
     }, []);
 
     return (
         <div>
             <div className="w-full flex flex-wrap gap-2 justify-center">
-                {products.map((product) => (
-                    <Card product={product} key={product._id} />
-                ))}
+                {products &&
+                    products.map((product) => (
+                        <Card product={product} key={product._id} />
+                    ))}
             </div>
         </div>
     );

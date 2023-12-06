@@ -34,7 +34,7 @@ const router = createBrowserRouter(
                 path="/dash"
                 element={
                     <AuthorizedRoute
-                        requiredRole="client"
+                        requiredRole="manager"
                         element={<DashboardNavbar />}
                     />
                 }
