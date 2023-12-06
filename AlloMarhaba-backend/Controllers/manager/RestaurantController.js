@@ -8,12 +8,20 @@ async function createRestaurant(req, res) {
     // console.log(req.body);
 
     // return res.status(200).json({ data: req.body });
+    console.log("inside messi");
+    const slug = req.body.name.replace(/\s+/g, "").toLowerCase();
+    console.log("slug");
+    console.log(slug);
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+    const newSlug = slug + randomNumber;
+    console.log("newSlug");
+    console.log(newSlug);
 
     try {
-        console.log("inside try");
         const savedRestaurant = await Restaurant.create({
             user: req.user.userId,
             name: req.body.name,
+            slug: newSlug,
             adress: req.body.adress,
             city: req.body.city,
             country: req.body.country,
@@ -27,7 +35,6 @@ async function createRestaurant(req, res) {
             success: "Restaurant created successfully",
         });
     } catch (err) {
-        console.log(err);
         return res.status(400).send({ error: err });
     }
 }

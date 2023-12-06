@@ -11,6 +11,11 @@ const RestaurantSchema = new mongoose.Schema({
         minLength: 3,
         maxLength: 50,
     },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     adress: {
         type: String,
         required: [true, "Please Provide a adress"],
@@ -38,7 +43,8 @@ const RestaurantSchema = new mongoose.Schema({
         required: [true, "Please Provide a image"],
     },
     cuisineType: {
-        type: mongoose.Schema.Types.ObjectId,
+        // type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: [true, "Please Provide a cuisine Type"],
         ref: "CuisineType",
     },

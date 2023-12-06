@@ -3,7 +3,6 @@ const Restaurant = require("../Models/Restaurant");
 const CuisineType = require("../Models/CuisineType");
 const User = require("../Models/Users");
 
-
 async function createRestaurant(req, res) {
     const { error } = validateRestaurant.validateCreateRestaurant(req.body);
     if (error) return res.status(400).send({ error: error.details[0].message });
@@ -11,12 +10,20 @@ async function createRestaurant(req, res) {
     // console.log(req.body);
 
     // return res.status(200).json({ data: req.body });
+    console.log("inside messi");
+    const slug = req.body.name.replace(/\s+/g, "").toLowerCase();
+    console.log("slug");
+    console.log(slug);
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+    const newSlug = slug + randomNumber;
+    console.log("newSlug");
+    console.log(newSlug);
 
     try {
-        console.log("inside try");
         const savedRestaurant = await Restaurant.create({
             user: req.user.userId,
             name: req.body.name,
+            slug: newSlug,
             adress: req.body.adress,
             city: req.body.city,
             country: req.body.country,
@@ -66,20 +73,20 @@ async function getRestaurantByUserId(req, res) {
 
 const searchRestaurantByName = async (req, res) => {
     try {
-
         const restaurants = await Restaurant.find({
-            $or: [
-                { name: { $regex: req.params.key, $options: 'i' } },
-            ],
+            $or: [{ name: { $regex: req.params.key, $options: "i" } }],
         });
 
         if (restaurants.length === 0) {
-            return res.status(404).json({ message: 'No restaurants found.' });
+            return res.status(404).json({ message: "No restaurants found." });
         }
 
         res.status(200).json({ restaurants });
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching restaurants.', error: error.message });
+        res.status(500).json({
+            message: "Error fetching restaurants.",
+            error: error.message,
+        });
     }
 };
 
@@ -87,63 +94,70 @@ const searchByCuisineType = async (req, res) => {
     try {
         const cuisineTypeId = req.params.cuisineTypeId;
         // console.log(cuisineTypeId) ;
-        const restaurants = await Restaurant.find({ cuisineType: cuisineTypeId });
+        const restaurants = await Restaurant.find({
+            cuisineType: cuisineTypeId,
+        });
         // console.log(restaurants);
 
         if (restaurants.length === 0) {
-            return res.status(404).json({ message: 'No restaurants found for this category.' });
+            return res
+                .status(404)
+                .json({ message: "No restaurants found for this category." });
         }
-        
+
         res.status(200).json({ restaurants });
     } catch (error) {
         // console.error(error)
-        res.status(500).json({ message: 'Error fetching restaurants by category.', error: error.message });
+        res.status(500).json({
+            message: "Error fetching restaurants by category.",
+            error: error.message,
+        });
     }
 };
 
-const searchByPlace = async (req, res)=>{
-    const city = req.params.place
-    const restaurants = await Restaurant.find({city:city}).select('name latitude longitude image cuisineType').populate('cuisineType')
-    console.log(restaurants)
-    res.json({restaurants})
-}
+const searchByPlace = async (req, res) => {
+    const city = req.params.place;
+    const restaurants = await Restaurant.find({ city: city })
+        .select("name latitude longitude image cuisineType")
+        .populate("cuisineType");
+    console.log(restaurants);
+    res.json({ restaurants });
+};
 
 const displayRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
         res.json({ restaurants });
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching restaurants.', error: error.message });
+        res.status(500).json({
+            message: "Error fetching restaurants.",
+            error: error.message,
+        });
     }
 };
 
-const displayMyRestaurant = async (req , res)=>{
+const displayMyRestaurant = async (req, res) => {
     try {
-        const user_id = req.user.userId
+        const user_id = req.user.userId;
         console.log("nari");
         console.log(user_id);
         const getRestaurant = await Restaurant.findOne({
             user: user_id,
-        })
-                if (getRestaurant) {
+        });
+        if (getRestaurant) {
             res.status(201).json({
-                message : 'voila votre restaurant',
-                data : getRestaurant
-            })}
-            else {
-                res.json({
-                    message : 'pas de restaurant',
-
-                })
+                message: "voila votre restaurant",
+                data: getRestaurant,
+            });
+        } else {
+            res.json({
+                message: "pas de restaurant",
+            });
         }
-       
-        
     } catch (error) {
         console.log(error.message);
     }
-
-    }
-
+};
 
 module.exports = {
     createRestaurant,
@@ -152,5 +166,5 @@ module.exports = {
     searchByCuisineType,
     displayRestaurants,
     searchByPlace,
-    displayMyRestaurant
+    displayMyRestaurant,
 };
