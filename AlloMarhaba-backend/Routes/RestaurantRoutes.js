@@ -13,6 +13,6 @@ router.get('/restaurants/search/cuisine-type/:cuisineTypeId', restaurantControll
 router.get('/restaurants/search/searchByPlace/:place', restaurantController.searchByPlace);
 router.get('/restaurants/cuisine-type', TypeCuisineController.displayCuisineType)
 router.post('/assign-order-to-livreur', OrderController.assignOrderToLivreur)
-// router.get('/notifications/:email', NotificationController.getAllNotificationsForUser);
+router.get('/notifications/:email', NotificationController.getAllNotificationsForUser);
 
 module.exports = router

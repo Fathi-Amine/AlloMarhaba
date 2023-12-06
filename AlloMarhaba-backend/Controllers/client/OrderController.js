@@ -154,9 +154,9 @@ const changeStatusOrders = async (req, res) => {
 
   const assignOrderToLivreur = async (req, res) => {
     try {
-        const { notificationText } = req.body;
+        const { notificationText, user } = req.body;
     
-        const newNotification = new Notification({ text: notificationText });
+        const newNotification = new Notification({ text: notificationText, livreur: user });
         await newNotification.save();
         const io = req.app.get("socketio");
         
