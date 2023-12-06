@@ -5,7 +5,11 @@ const notificationSchema = new mongoose.Schema({
   livreur: {
     type: mongoose.Schema.Types.String,
     ref: 'Users' 
-  }
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+},
 });
 
 
