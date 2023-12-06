@@ -23,6 +23,7 @@ function FillRestaurant() {
     const [chosenPhone, setChosenPhone] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
     const [error, setError] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // const position = [31.7917, -7.0926];
     const [position, setPosition] = useState([]);
@@ -45,7 +46,12 @@ function FillRestaurant() {
             Axios.get("http://localhost:5000/api/manager/checkRestaurant", {
                 withCredentials: true,
             }).then((response) => {
-                console.log(response.data.status);
+                console.log(response.data);
+                if (response.data.status === true) {
+                    window.location.replace("/dash");
+                } else {
+                    setLoading(false);
+                }
             });
         };
 
@@ -117,138 +123,149 @@ function FillRestaurant() {
         })
             .then((response) => {
                 console.log(response.data);
+                alert("Restaurant added successfully");
+                window.location.replace("/dash");
             })
             .catch((error) => {
                 console.log(error);
             });
     };
     return (
-        <div className="flex flex-col items-center mt-16">
-            <h5 className="text-stone-700 text-2xl font-semibold text-center">
-                Fill Info About Your Resraurant
-            </h5>
-            {/* div to display errors */}
-            <div className="flex flex-col items-center bg-red-500 w-full">
-                <ul>
-                    {error.map((err, index) => (
-                        <li key={index}>{err} is required</li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                <form
-                    onSubmit={handleSubmit}
-                    className="mt-8  p-4 flex flex-col gap-2"
-                    action=""
-                >
-                    <div className="flex gap-2 flex-col sm:flex-row ">
-                        <div>
-                            <input
-                                type="text"
-                                className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-                                placeholder="name"
-                                onChange={(e) => setChosenName(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="number"
-                                className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-                                placeholder="phone number"
-                                onChange={(e) => setChosenPhone(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div className="flex gap-2 flex-col sm:flex-row ">
-                        <div>
-                            <CountrySelector
-                                onSelectCountry={setChosenCountry}
-                            />
-                        </div>
-                        <div>
-                            <CitySelector
-                                selectedCountry={chosenCountry}
-                                onSelectCity={setChosenCity}
-                            />
-                        </div>
-                    </div>
-                    <div className="flex gap-2 flex-col sm:flex-row ">
-                        <div>
-                            <input
-                                type="text"
-                                className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-                                placeholder="Adress"
-                                onChange={(e) =>
-                                    setChosenAdress(e.target.value)
-                                }
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="text"
-                                className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-                                placeholder="cuisine type"
-                                onChange={(e) =>
-                                    setChosenCuisine(e.target.value)
-                                }
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex gap-2 flex-col sm:flex-row">
-                        <div>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                className="w-80 border-slate-500 border-1 px-2 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
-                                placeholder="image"
-                                onChange={handleImageChange}
-                            />
-                        </div>
-                        {imagePreview && (
+        // if loading render loading
+        loading ? (
+            <div className="flex justify-center text-2xl">loading ...</div>
+        ) : (
+            <div className="flex flex-col items-center mt-16">
+                <h5 className="text-stone-700 text-2xl font-semibold text-center">
+                    Fill Info About Your Resraurant
+                </h5>
+                {/* div to display errors */}
+                <div className="flex flex-col items-center bg-red-500 w-full">
+                    <ul>
+                        {error.map((err, index) => (
+                            <li key={index}>{err} is required</li>
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    <form
+                        onSubmit={handleSubmit}
+                        className="mt-8  p-4 flex flex-col gap-2"
+                        action=""
+                    >
+                        <div className="flex gap-2 flex-col sm:flex-row ">
                             <div>
-                                <img
-                                    src={imagePreview}
-                                    alt="Image Preview"
-                                    style={{
-                                        maxWidth: "100px",
-                                        maxHeight: "100px",
-                                    }}
+                                <input
+                                    type="text"
+                                    className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                                    placeholder="name"
+                                    onChange={(e) =>
+                                        setChosenName(e.target.value)
+                                    }
                                 />
                             </div>
-                        )}
-                    </div>
-                    <div style={{ position: "relative", width: "300px" }}>
-                        <h1>Map Manager</h1>
-                        {position[0] != null && (
-                            <MapContainer
-                                center={position}
-                                zoom={9}
-                                scrollWheelZoom={false}
-                                style={{ height: "300px" }}
-                            >
-                                <Marker
-                                    position={position}
-                                    icon={L.icon({
-                                        iconUrl: logo,
-                                        iconSize: [35, 41],
-                                        iconAnchor: [12.5, 41],
-                                        popupAnchor: [0, -41],
-                                    })}
+                            <div>
+                                <input
+                                    type="number"
+                                    className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                                    placeholder="phone number"
+                                    onChange={(e) =>
+                                        setChosenPhone(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className="flex gap-2 flex-col sm:flex-row ">
+                            <div>
+                                <CountrySelector
+                                    onSelectCountry={setChosenCountry}
+                                />
+                            </div>
+                            <div>
+                                <CitySelector
+                                    selectedCountry={chosenCountry}
+                                    onSelectCity={setChosenCity}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex gap-2 flex-col sm:flex-row ">
+                            <div>
+                                <input
+                                    type="text"
+                                    className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                                    placeholder="Adress"
+                                    onChange={(e) =>
+                                        setChosenAdress(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="text"
+                                    className="w-80 border-slate-500 border-1 px-2 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                                    placeholder="cuisine type"
+                                    onChange={(e) =>
+                                        setChosenCuisine(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 flex-col sm:flex-row">
+                            <div>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="w-80 border-slate-500 border-1 px-2 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                                    placeholder="image"
+                                    onChange={handleImageChange}
+                                />
+                            </div>
+                            {imagePreview && (
+                                <div>
+                                    <img
+                                        src={imagePreview}
+                                        alt="Image Preview"
+                                        style={{
+                                            maxWidth: "100px",
+                                            maxHeight: "100px",
+                                        }}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        <div style={{ position: "relative", width: "300px" }}>
+                            <h1>Map Manager</h1>
+                            {position[0] != null && (
+                                <MapContainer
+                                    center={position}
+                                    zoom={9}
+                                    scrollWheelZoom={false}
+                                    style={{ height: "300px" }}
                                 >
-                                    <Popup>Tu es ici !</Popup>
-                                </Marker>
-                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                <LeafletClick />
-                            </MapContainer>
-                        )}
-                    </div>
-                    <button className="bg-slate-500 text-white px-4 py-2 rounded-md hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50">
-                        submit
-                    </button>
-                </form>
+                                    <Marker
+                                        position={position}
+                                        icon={L.icon({
+                                            iconUrl: logo,
+                                            iconSize: [35, 41],
+                                            iconAnchor: [12.5, 41],
+                                            popupAnchor: [0, -41],
+                                        })}
+                                    >
+                                        <Popup>Tu es ici !</Popup>
+                                    </Marker>
+                                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                    <LeafletClick />
+                                </MapContainer>
+                            )}
+                        </div>
+                        <button className="bg-slate-500 text-white px-4 py-2 rounded-md hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50">
+                            submit
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
+        )
     );
 }
 
