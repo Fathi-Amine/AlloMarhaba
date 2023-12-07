@@ -15,7 +15,6 @@ export default function DashboardOrderTable() {
     useShowOrdersQuery();
 
   const [selectedStatus, setSelectedStatus] = useState({});
-  // console.log(showOrder);
   const handleStatusChange = (orderId, newStatus) => {
     setSelectedStatus({
       ...selectedStatus,
@@ -89,9 +88,9 @@ export default function DashboardOrderTable() {
                   <th scope="col" className="px-6 py-3">
                     <span className="sr-only">Edit</span>
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  {/* <th scope="col" className="px-6 py-3">
                     <span className="sr-only">Delete</span>
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>
@@ -105,8 +104,12 @@ export default function DashboardOrderTable() {
                         {order.user_id && order.user_id.username}
                       </td>
                       <td className="px-6 py-4">
-
-                      </td>
+        {order.menus.map((menu) => (
+          <div key={menu._id._id}>
+            menu {menu._id.name} 
+          </div>
+        ))}
+      </td>
                       <td className="px-6 py-4">
                         <select
                         name="status"
@@ -126,14 +129,14 @@ export default function DashboardOrderTable() {
                         </select>
                       </td>
                       <td className="px-6 py-4">{order.total_price}</td>
-                      <td className="px-6 py-4 text-right">
+                      {/* <td className="px-6 py-4 text-right">
                         <button
                           onClick={() => handleEdit(order._id)}
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         >
                           Edit
                         </button>
-                      </td>
+                      </td> */}
                       <td className="px-6 py-4 text-right">
                         <button
                           onClick={() => handleDelete(order._id)}

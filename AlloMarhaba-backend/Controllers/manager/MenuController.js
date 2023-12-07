@@ -107,6 +107,25 @@ const deleteMenuItem = async (req, res) => {
     }
 };
 
+const getRestaurantMenu = async (req, res) => {
+    const { restaurantName } = req.params;
+    try {
+        const restaurant = await RestaurantModel.findOne({
+            slug: restaurantName,
+        });
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant not found" });
+        }
+
+        const menuItems = await Menu.find({ restaurant_id: restaurant._id });
+
+        return res.status(200).json({ menu: menuItems });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: error.message });
+    }
+};
 
 
-module.exports = { getMenuItems,getMenuItem, createMenuItem , updateMenuItem , updateMenuImage, deleteMenuItem};
+
+module.exports = { getMenuItems, getRestaurantMenu ,getMenuItem, createMenuItem , updateMenuItem , updateMenuImage, deleteMenuItem};

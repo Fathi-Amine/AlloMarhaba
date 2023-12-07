@@ -28,7 +28,6 @@ import Checkout from "./pages/client/Checkout.jsx";
 import Restaurant from "./components/Restaurants/index.jsx";
 import TrackOrder from "./pages/client/TrackOrder.jsx";
 import ClientOrders from "./pages/client/ClientOrders.jsx";
-
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route>
@@ -36,11 +35,14 @@ const router = createBrowserRouter(
                 path="/dash"
                 element={
                     <AuthorizedRoute
-                        requiredRole="client"
+                        requiredRole="manager"
                         element={<DashboardNavbar />}
                     />
                 }
+                
             ></Route>
+              <Route path="/track-order/:orderId" element={<TrackOrder/>}></Route>
+            <Route path="/ClientOrder" element={<ClientOrders />}></Route>
             <Route path="/" element={<App />}>
                 <Route index={true} path="/" element={<Home />}></Route>
                 <Route path="/login" element={<LoginPage />}></Route>
@@ -73,6 +75,7 @@ const router = createBrowserRouter(
         </Route>
     )
 );
+
 ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
         {/* <React.StrictMode> */}
@@ -80,3 +83,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         {/* </React.StrictMode>, */}
     </Provider>
 );
+

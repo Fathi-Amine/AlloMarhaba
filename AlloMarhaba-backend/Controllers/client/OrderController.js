@@ -4,9 +4,11 @@ const OrderModel = require("../../Models/Order");
 
 async function createOrder(req, res) {
     try {
+      
+      console.log(req.body.restaurantName);
         // Select restaurant by name and select only the id
         const restaurant = await RestaurantModel.findOne({
-            name: req.body.restaurantName,
+            slug: req.body.restaurantName,
         });
 
         if (!restaurant) {
@@ -61,7 +63,10 @@ const getOrders = async (req , res)=>{
             console.log('for restau id',restaurantId);
         const orders = await OrderModel.find({
             restaurant_id : restaurantId
-        }).populate('user_id', 'username')
+        }).populate('user_id', 'username').populate({
+            path: 'menus._id',
+            model: 'Menu',
+          });
         
         if (orders) {
             res.status(201).json({

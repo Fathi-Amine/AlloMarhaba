@@ -330,11 +330,19 @@ export default function DashboardModal({
                   onChange={(e) => setRestaurant(e.target.value)}
                 >
                   <MenuItem value="">Select Restaurant</MenuItem>
-                  {restaurants.map((restaurant) => (
+                  {restaurants.length >0  ? (
+
+                  restaurants.map((restaurant) => (
                     <MenuItem key={restaurant._id} value={restaurant._id}>
                       {restaurant.name}
                     </MenuItem>
-                  ))}
+                  ))
+                  ):(
+                    <MenuItem  value="">
+                      pas de restaurent 
+                    </MenuItem>
+                  )}
+
                 </Select>
                 {modeModal !== "edit" && (
                   <span className="text-red-500 text-sm">
