@@ -115,13 +115,21 @@ const searchByCuisineType = async (req, res) => {
     }
 };
 
-const searchByPlace = async (req, res) => {
-    const city = req.params.place;
+const searchByPlace = async (req, res) => {  
+    console.log('gdgggggd');
+
+    try {
+        const city = req.params.place;
+        console.log(city);
     const restaurants = await Restaurant.find({ city: city })
         .select("name latitude longitude image cuisineType")
         .populate("cuisineType");
     console.log(restaurants);
+    console.log('hhhhhhh');
     res.json({ restaurants });
+    } catch (error) {
+        return res.json(error)
+    }
 };
 
 const displayRestaurants = async (req, res) => {

@@ -27,7 +27,7 @@ import Products from "./pages/client/Products.jsx";
 import Checkout from "./pages/client/Checkout.jsx";
 import Restaurant from "./components/Restaurants/index.jsx";
 import TrackOrder from "./pages/client/TrackOrder.jsx";
-import ClientOrders from "./pages/client/ClientOrders.jsx";
+import ClientOrders from "./pages/client/ClientOrders.jsx"
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route>
