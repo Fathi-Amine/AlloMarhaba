@@ -26,9 +26,8 @@ import FillRestaurant from "./pages/manager/FillRestaurant.jsx";
 import Products from "./pages/client/Products.jsx";
 import Checkout from "./pages/client/Checkout.jsx";
 import Restaurant from "./components/Restaurants/index.jsx";
-import TrackOrder from "./pages/client/TrackOrder.jsx"
-import ClientOrders from "./pages/client/ClientOrders.jsx"
-
+import TrackOrder from "./pages/client/TrackOrder.jsx";
+import ClientOrders from "./pages/client/ClientOrders.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -61,14 +60,35 @@ const router = createBrowserRouter(
                     <Route path="/profile" element={<ProfilePage />}></Route>
                     <Route
                         path="/manager/fill-restaurant"
-                        element={<FillRestaurant />}
+                        element={
+                            <AuthorizedRoute
+                                requiredRole="manager"
+                                element={<FillRestaurant />}
+                            />
+                        }
                     ></Route>
                     <Route
                         path="/:restaurantName/products"
                         element={<Products />}
                     ></Route>
-                    <Route path="/checkout" element={<Checkout />}></Route>
-                    <Route path="/restaurants" element={<Restaurant />}></Route>
+                    <Route
+                        path="/checkout"
+                        element={
+                            <AuthorizedRoute
+                                requiredRole="manager"
+                                element={<Checkout />}
+                            />
+                        }
+                    ></Route>
+                    <Route
+                        path="/restaurants"
+                        element={
+                            <AuthorizedRoute
+                                requiredRole="client"
+                                element={<Restaurant />}
+                            />
+                        }
+                    ></Route>
                 </Route>
             </Route>
         </Route>

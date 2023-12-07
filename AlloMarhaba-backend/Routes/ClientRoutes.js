@@ -8,6 +8,7 @@ const menuController = require("../Controllers/manager/MenuController");
 // post request to create a new order
 
 router.post("/orders", authMiddleware, orderController.createOrder);
+
 router.get("/getClientOrders", authMiddleware, getCLientOrders);
 
 // get menus of a restaurant

@@ -39,21 +39,23 @@ const LoginPage = () => {
             <Form onSubmit={submitHandler}>
                 <Form.Group className="my-2" controlId="email">
                     <Form.Label>Email Address</Form.Label>
-                    <Form.Control
+                    <input
+                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                         type="email"
                         placeholder="Enter your email address"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                    ></Form.Control>
+                    />
                 </Form.Group>
                 <Form.Group className="my-2" controlId="password">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control
+                    <input
+                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                         type="password"
                         placeholder="Enter your password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                    ></Form.Control>
+                    />
                 </Form.Group>
                 {isLoading && <Loader />}
                 <Button type="submit" variant="primary" className="mt-3">

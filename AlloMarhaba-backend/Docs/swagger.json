@@ -1,167 +1,740 @@
 {
-  "openapi": "3.0.0",
-  "info": {
-    "title": "Authentication API",
-    "version": "1.0.0",
-    "description": "This is the auth api documentation for Allo Media Api"
-  },
-  "paths": {
-    "/register": {
-      "post": {
-        "summary": "Register a new user",
-        "description": "Create a new user account with provided information.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "number"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User registered successfully"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Allo Marhaba Api",
+        "version": "1.0.0",
+        "description": "Allo Marhaba Api where you can find all the endpoints for the application"
     },
-    "/login": {
-      "post": {
-        "summary": "Login with user credentials",
-        "description": "Authenticate and log in a user with their credentials.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
+    "paths": {
+        "/register": {
+            "post": {
+                "summary": "Register a new user",
+                "description": "Create a new user account with provided information.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User registered successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
                 }
-              }
             }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "User login successful"
-          },
-          "401": {
-            "description": "Unauthorized - Invalid credentials"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/logout": {
-      "post": {
-        "summary": "Logout the user",
-        "description": "Log out the currently authenticated user.",
-        "responses": {
-          "200": {
-            "description": "User logged out successfully"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/reset-password": {
-      "post": {
-        "summary": "Reset user password",
-        "description": "Reset the password for a user account.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "newPassword": {
-                    "type": "string"
-                  }
+        "/login": {
+            "post": {
+                "summary": "Login with user credentials",
+                "description": "Authenticate and log in a user with their credentials.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User login successful"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid credentials"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
                 }
-              }
             }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Password reset successful"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/forgot-password": {
-      "post": {
-        "summary": "Forgot user password",
-        "description": "Initiate the process of resetting a forgotten password.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  }
+        "/logout": {
+            "post": {
+                "summary": "Logout the user",
+                "description": "Log out the currently authenticated user.",
+                "responses": {
+                    "200": {
+                        "description": "User logged out successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
                 }
-              }
             }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Password reset request sent successfully"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
+        "/reset-password": {
+            "post": {
+                "summary": "Reset user password",
+                "description": "Reset the password for a user account.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "newPassword": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset successful"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/forgot-password": {
+            "post": {
+                "summary": "Forgot user password",
+                "description": "Initiate the process of resetting a forgotten password.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset request sent successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "post": {
+                "summary": "Create a new order",
+                "description": "Create a new order for a restaurant.",
+                "tags": ["Orders"],
+                "security": [{ "BearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "restaurantName": {
+                                        "type": "string",
+                                        "description": "Name of the restaurant"
+                                    },
+                                    "menus": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "menu_id": {
+                                                    "type": "string",
+                                                    "description": "id of menu item"
+                                                },
+                                                "quantity": {
+                                                    "type": "number",
+                                                    "description": "Quantity of the menu item"
+                                                }
+                                            }
+                                        },
+                                        "description": "Array of menu items"
+                                    },
+                                    "totalPrice": {
+                                        "type": "number",
+                                        "description": "Total price of the order"
+                                    },
+                                    "checkoutDetails": {
+                                        "type": "object",
+                                        "description": "Additional checkout details"
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "description": "Longitude of the delivery location"
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "description": "Latitude of the delivery location"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Order created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/getClientOrders": {
+            "get": {
+                "summary": "Get client orders",
+                "description": "Retrieve orders for the authenticated client.",
+                "tags": ["Orders"],
+                "security": [{ "BearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Client orders retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "voici votre commande",
+                                    "data": [
+                                        {
+                                            "_id": "order_id_1",
+                                            "restaurant_id": {
+                                                "_id": "restaurant_id_1",
+                                                "name": "Restaurant Name 1"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No orders found for the client",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "pas de commande pour vous"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/products/{restaurantName}": {
+            "get": {
+                "summary": "Get restaurant menu",
+                "description": "Retrieve the menu for a specific restaurant.",
+                "tags": ["Menu"],
+                "parameters": [
+                    {
+                        "name": "restaurantName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Slug of the restaurant"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Restaurant menu retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "menu": [
+                                        {
+                                            "_id": "menu_id_1",
+                                            "restaurant_id": "restaurant_id_1",
+                                            "name": "Item 1"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Restaurant not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Restaurant not found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/addMenu": {
+            "post": {
+                "summary": "Add a new menu item",
+                "description": "Create a new menu item for a restaurant.",
+                "tags": ["Menu"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the menu item"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "description": "URL or path to the image of the menu item"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "description": "Price of the menu item"
+                                    },
+                                    "restaurant_id": {
+                                        "type": "string",
+                                        "description": "ID of the restaurant to which the menu item belongs"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "image",
+                                    "price",
+                                    "restaurant_id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Menu item added successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Item added successfully",
+                                    "newItem": {
+                                        "_id": "menu_item_id_1",
+                                        "name": "New Item",
+                                        "image": "https://example.com/image.jpg",
+                                        "price": 9.99,
+                                        "restaurant_id": "restaurant_id_1"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Internal server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "paths": {
+            "/showMenus": {
+                "get": {
+                    "summary": "Show menu items",
+                    "description": "Retrieve menu items for the authenticated user's restaurant.",
+                    "tags": ["Menu"],
+                    "security": [{ "BearerAuth": [] }],
+                    "responses": {
+                        "200": {
+                            "description": "Menu items retrieved successfully",
+                            "content": {
+                                "application/json": {
+                                    "example": {
+                                        "menu": [
+                                            {
+                                                "_id": "menu_item_id_1",
+                                                "restaurant_id": {
+                                                    "_id": "restaurant_id_1",
+                                                    "name": "Restaurant Name 1"
+                                                },
+                                                "name": "Item 1"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "404": {
+                            "description": "No menu items found for the user's restaurant",
+                            "content": {
+                                "application/json": {
+                                    "example": {
+                                        "message": "pas de menu pour vous"
+                                    }
+                                }
+                            }
+                        },
+                        "500": {
+                            "description": "Internal server error",
+                            "content": {
+                                "application/json": {
+                                    "example": {
+                                        "message": "Internal server error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/showMenu": {
+            "post": {
+                "summary": "Show a menu item",
+                "description": "Retrieve details of a specific menu item.",
+                "tags": ["Menu"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "ID of the menu item"
+                                    }
+                                },
+                                "required": ["id"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Menu item retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "menu": {
+                                        "_id": "menu_item_id_1",
+                                        "name": "Item 1"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Menu item not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Menu item not found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Internal server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/updateMenu": {
+            "post": {
+                "summary": "Update a menu item",
+                "description": "Update details of a specific menu item.",
+                "tags": ["Menu"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "ID of the menu item to update"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Updated name of the menu item"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "description": "Updated URL or path to the image of the menu item"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "description": "Updated price of the menu item"
+                                    },
+                                    "restaurant_id": {
+                                        "type": "string",
+                                        "description": "Updated ID of the restaurant to which the menu item belongs"
+                                    }
+                                },
+                                "required": ["id"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Menu item updated successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Menu item updated successfully",
+                                    "updatedItem": {
+                                        "_id": "menu_item_id_1",
+                                        "name": "Updated Item"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Menu item not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Menu item not found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Internal server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deleteMenu": {
+            "post": {
+                "summary": "Delete a menu item",
+                "description": "Delete a specific menu item.",
+                "tags": ["Menu"],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "ID of the menu item to delete"
+                                    }
+                                },
+                                "required": ["id"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Menu item deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Menu item deleted successfully",
+                                    "deletedItem": {
+                                        "_id": "menu_item_id_1",
+                                        "name": "Deleted Item"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Menu item not found",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Menu item not found"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Internal server error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/restaurant/add": {
+            "post": {
+                "summary": "Create a new restaurant",
+                "description": "Create a new restaurant with provided information.",
+                "tags": ["Restaurant"],
+                "security": [{ "BearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the restaurant"
+                                    },
+                                    "adress": {
+                                        "type": "string",
+                                        "description": "Address of the restaurant"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "description": "City where the restaurant is located"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "description": "Country where the restaurant is located"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "description": "Phone number of the restaurant"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "description": "URL or path to the image of the restaurant"
+                                    },
+                                    "cuisineType": {
+                                        "type": "string",
+                                        "description": "Type of cuisine offered by the restaurant"
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "description": "Latitude of the restaurant's location"
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "description": "Longitude of the restaurant's location"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "adress",
+                                    "city",
+                                    "country",
+                                    "phone",
+                                    "image",
+                                    "cuisineType",
+                                    "latitude",
+                                    "longitude"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Restaurant created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "error": "Validation error message"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "error": "Internal server error message"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
